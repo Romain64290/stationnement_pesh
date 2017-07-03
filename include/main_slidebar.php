@@ -32,20 +32,13 @@
              <a href="../dashboard/index.php"><i class="fa fa-dashboard active"></i> <span>Tableau de bord</span></a>
             </li>
             
-             
-              <li <?php if($menu==2){echo "class=\"active\"";}?>>
-            <a href="../compostage/index.php"><i class="fa fa-calendar "></i> <span>Ajout d'une réunion</span></a>
+               <li <?php if($menu==2){echo "class=\"active\"";}?>>
+            <a href="../export/index.php"><i class="fa fa-user"></i> <span>Export AFS2R</span></a>
             </li>
-     
+            
               <li <?php if($menu==3){echo "class=\"active\"";}?>>
-            <a href="../compostage/listing.php"><i class="fa fa-list"></i> <span>Listing des réunions</span></a>
+            <a href="../administrateurs/index.php"><i class="fa fa-users"></i> <span>Gestion des admin</span></a>
             </li>
-            
-              <li <?php if($menu==4){echo "class=\"active\"";}?>>
-            <a href="../compostage/recherche.php"><i class="fa fa-users"></i> <span>Recherche participant</span></a>
-            </li>
-            
-    
             
           </ul><!-- /.sidebar-menu -->
         </section>

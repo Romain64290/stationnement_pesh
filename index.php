@@ -1,3 +1,3 @@
 <?php
-header ('location: modules/compostage/index.php'); 
+header ('location: modules/public/index.php'); 
 ?>

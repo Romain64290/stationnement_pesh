@@ -3,7 +3,7 @@
 /***** Dernière modification : 08/09/2016, Romain TALDU	*****/
 
 require(__DIR__ .'/../../../include/verif_session.php');
-$menu=1;
+$menu=2;
 require(__DIR__ .'/../../../include/config.inc.php');
 require(__DIR__ .'/../../../include/connexion.inc.php');
 require(__DIR__ .'/model.inc.php');
@@ -58,12 +58,12 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-           Tableau de bord
+           Export AFS2R
             
           </h1>
           <ol class="breadcrumb">
             <li><a href="index.php"><i class="fa fa-user"></i> Accueil</a></li>
-            <li class="active">  Tableau de bord</li>
+            <li class="active">  Export AFS2R</li>
           </ol>
           
         </section>

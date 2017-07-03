@@ -1,6 +1,6 @@
  <?php 
 
-/***** Dernière modification : 22/08/2016, Romain TALDU	*****/
+/***** Dernière modification : 03/07/2017, Romain TALDU	*****/
  ?>
 
  <!-- Main Header -->
@@ -9,9 +9,9 @@
         <!-- Logo -->
         <a href="#" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>D3D</b></span>
+          <span class="logo-mini"><b>Stationnement</b></span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>D3D</b> Compostage</span>
+          <span class="logo-lg"><b>Stationnement</b> Pau</span>
         </a>
 
         <!-- Header Navbar -->
