@@ -1,7 +1,12 @@
  <?php
 
 /***** Dernière modification : 24/08/2016, Romain TALDU	*****/
+ 
+require(__DIR__ .'/model.inc.php');
 
+// préparation connexion
+$connect = new connection();
+$includes = new includes($connect);
 
 
  ?>    
@@ -36,9 +41,16 @@
             <a href="../export/index.php"><i class="fa fa-external-link-square"></i> <span>Export AFS2R</span></a>
             </li>
             
+                
+            <?php if($_SESSION['id_typemembre']==4){ ?>
+             
               <li <?php if($menu==3){echo "class=\"active\"";}?>>
-            <a href="../administrateurs/index.php"><i class="fa fa-users"></i> <span>Gestion des admin</span></a>
+            <a href="../administrateurs/index.php"><i class="fa fa-users"></i> <span>Gestion des admin</span>
+            	<?php echo $includes->adminAttente(); ?>
+            	</a>
             </li>
+            
+            <?php } ?>
             
           </ul><!-- /.sidebar-menu -->
         </section>
