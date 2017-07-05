@@ -141,7 +141,7 @@ if($validation_inscription ==0) {echo "	 <a class=\"btn btn-warning btn-xs\" hre
 if($validation_inscription ==1) {echo "	 <a class=\"btn btn-success btn-xs\" href=\"#\"><i class=\"fa fa-check fa-lg\"></i></a>";}
 
 echo "</td><td style=\"width: 11%; text-align: left\">
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class=\"form-group\">";
+<div class=\"form-group\">";
                       
 if($id_typemembre !=4){
                       

@@ -33,7 +33,7 @@
             </li>
             
                <li <?php if($menu==2){echo "class=\"active\"";}?>>
-            <a href="../export/index.php"><i class="fa fa-user"></i> <span>Export AFS2R</span></a>
+            <a href="../export/index.php"><i class="fa fa-external-link-square"></i> <span>Export AFS2R</span></a>
             </li>
             
               <li <?php if($menu==3){echo "class=\"active\"";}?>>

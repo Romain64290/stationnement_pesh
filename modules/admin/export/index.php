@@ -62,7 +62,7 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
             
           </h1>
           <ol class="breadcrumb">
-            <li><a href="index.php"><i class="fa fa-user"></i> Accueil</a></li>
+            <li><a href="index.php"><i class="fa fa-external-link"></i> Accueil</a></li>
             <li class="active">  Export AFS2R</li>
           </ol>
           
