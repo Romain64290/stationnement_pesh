@@ -20,7 +20,8 @@
   try{
   		
 		$select = $this->con->prepare('SELECT *
-		FROM decla_immat');
+		FROM decla_immat
+                ORDER BY etat_dde ASC, nom ASC');
 		
 		$select->execute();
 		

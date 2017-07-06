@@ -62,7 +62,7 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
             
           </h1>
           <ol class="breadcrumb">
-            <li><a href="index.php"><i class="fa fa-user"></i> Accueil</a></li>
+            <li><a href="index.php"><i class="fa fa-dashboard"></i> Accueil</a></li>
             <li class="active">  Tableau de bord</li>
           </ol>
           
@@ -74,28 +74,48 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
 
   	<!-- Main content -->
         <section class="content">
-        	
-     
- <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title" >Indicateurs</h3>
-                <div class="box-tools pull-right">
-      <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
-      <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
-    </div><!-- /.box-tools -->
-            </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            
-              <div class="box-body">
-            <div class="row">
-               
-              <!-- /.row -->
-            </div>
         
-              </div>
-    
-                     	 </div> 
+        <!-- Info boxes -->
+      <div class="row">
+                  <div class="col-md-4 col-sm-12 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="fa fa-car"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Nombre demandes</span>
+              <span class="info-box-number">127</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->    
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-aqua"><i class="fa fa-wheelchair"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">PESH</span>
+              <span class="info-box-number">90</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-red"><i class="fa fa-medkit"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Pro. Santé</span>
+              <span class="info-box-number">47</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->    
+        </div>
+      </div>
+            
             
 <div class="box box-primary">
             <div class="box-header with-border">
@@ -109,20 +129,19 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
             <!-- form start -->
             
               <div class="box-body">
-            <div class="row">
-       <div class="table-responsive">          
-              <!-- Affichage de la liste des administrateurs  --> 
+                  
+          
+           
   <table id="liste_demandes" class="table table-bordered table-striped">
                     <thead>
                       <tr>
-                      	<th>#</th>
-                        <th>Type</th>
+                      	<th style=" text-align: center">#</th>
                         <th>Nom /Prenom</th>
-                        <th>Etat demande</th>
-                        <th>Modif. Etat</th>
-                         <th>Dossier</th>
-                        <th>Justificatifs</th>
-                        <th>Date validité</th>
+                        <th style=" text-align: center">Etat demande</th>
+                        <th style=" text-align: center">Modif. Etat</th>
+                         <th style=" text-align: center">Dossier</th>
+                        <th style=" text-align: center">Justificatifs</th>
+                        <th style=" text-align: center">Date validité</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -154,23 +173,17 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
 		 
 echo "
 <tr>
-            <td style=\"width:3%; text-align: left\">$compteur</td>
-                
-<td style=\"width: 3%; text-align: left\">";
-	 
-if($type_decla ==1) {echo "	 <a class=\"btn btn-primary btn-xs\" href=\"#\"><i class=\"fa fa-wheelchair fa-lg \"></i></a></td>";}
-if($type_decla ==2) {echo "	 <a class=\"btn btn-danger btn-xs\" href=\"#\"><i class=\"fa fa-medkit fa-lg\"></i></a></td>";}
-
- echo "     <td style=\"width: 15%; text-align: left\">$nom $prenom </td>
+     <td style=\"width:3%; text-align: left\">$compteur</td>
+     <td style=\"width: 25%; text-align: left\">$nom $prenom </td>
            
  
-<td style=\"width: 15%; text-align: left\">";
-if($etat_dde ==2) {echo "  <a class=\"btn btn-danger btn-xs\" href=\"#\"><i class=\"fa fa-times fa-lg \"></i></a>";}
-if($etat_dde ==0) {echo "<a class=\"btn btn-warning btn-xs\" href=\"#\"><i class=\"fa fa-question fa-lg\"></i></a>";}
-if($etat_dde ==1) {echo "Validée &nbsp;  <a class=\"btn btn-success btn-xs\" href=\"#\"><i class=\"fa fa-check fa-lg\"></i></a>";}
+<td style=\"width: 15%; text-align: center\">";
+if($etat_dde ==3) {echo "Refusée &nbsp; <a class=\"btn btn-danger btn-xs\" href=\"#\"><i class=\"fa fa-times fa-lg \"></i></a>";}
+if($etat_dde ==1) {echo "En cours &nbsp; <a class=\"btn btn-warning btn-xs\" href=\"#\"><i class=\"fa fa-question fa-lg\"></i></a>";}
+if($etat_dde ==2) {echo "Validée &nbsp;  <a class=\"btn btn-success btn-xs\" href=\"#\"><i class=\"fa fa-check fa-lg\"></i></a>";}
 
 
-echo "</td><td style=\"width: 12%; text-align: left\">";
+echo "</td><td style=\"width: 12%; text-align: center\">";
     
 
 
@@ -188,15 +201,14 @@ echo " </select>";
                   echo " </div></td>
      
 
- <td style=\"width: 5%; text-align: left\"><a href=\"dossier_pdf.php?id_decla=$id_decla\" target=\"_blank\"><span class=\"label label-primary\"><i class=\"fa fa-download\"></i> &nbsp; PDF</span></a></td>    
-<td style=\"width:10%; text-align: left\">
-<ul>
-<li><a href=\"#\"> Fichier 1</a></li>
-<li><a href=\"#\"> Fichier 2</a></li>
-</ul>
+ <td style=\"width: 13%; text-align: center\"><a href=\"dossier_pdf.php?id_decla=$id_decla\" target=\"_blank\"><span class=\"label label-primary\"><i class=\"fa fa-download\"></i> &nbsp; PDF</span></a></td>    
+<td style=\"width:23%; text-align: center\">
+
+| <a href=\"#\"> Justif. 1</a> | <a href=\"#\"> Justif. 2</a> | 
+
 
 </td>
-<td style=\"width:10%; text-align: left\">$date_validite</td>";
+<td style=\"width:15%; text-align: center\">$date_validite</td></tr>";
 
 	$compteur++;		
           
@@ -210,12 +222,11 @@ echo " </select>";
                    
                   </table>     
                 
-       </div>
+      
                 
                 
                 
-              <!-- /.row -->
-            </div>
+                     
         
               </div>
     
@@ -248,6 +259,7 @@ echo " </select>";
  
    <script>
   $('#liste_demandes').DataTable({
+      "scrollX": true,
          "stateSave": true,
          "stateDuration": 60 * 3,
           "ordering": false,

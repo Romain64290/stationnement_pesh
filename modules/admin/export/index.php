@@ -78,7 +78,7 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
      
  <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title" >Indicateurs</h3>
+              <h3 class="box-title" >Exportation vers le logiciel AFS2R</h3>
                 <div class="box-tools pull-right">
       <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
       <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
@@ -88,10 +88,30 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
             <!-- form start -->
             
               <div class="box-body">
-            <div class="row">
-               
-              <!-- /.row -->
-            </div>
+         
+              
+                  <h3><u> Etape 1 :  Générer le fichier d'export </u></h3>
+                
+                  Téléchargez le fichier et importez le dans le logciel AFS2R.<br>
+                  <u>Remarque :</u> Lorsque cette étape est activé, il est impossible pour les autres utilsateurs de modifiers les demandes en cours.
+                  <br> <br>
+                  
+                 
+
+  <button type="button" class="btn btn-primary"><i class="fa fa-download"></i> &nbsp; Télécharger le fichier *.csv</button>
+     
+        
+
+                 
+                  
+                  <br><br>
+              <h3><u>Etape 2 : Finaliser l'export</u></h3>
+              Si l'export dans le logiciel metier s'est correctement déroulé vous pouvez archiver les demandes validée, sinon vous pouvez annuler l'export pour re-essayer ultérieurment.<br><br>
+              
+              <button type="button" class="btn btn-danger" disabled="true">Annuler l'export </button> &nbsp;&nbsp;&nbsp;&nbsp;   <button type="button" class="btn btn-success" disabled="true">Valider l'export</button>   <br><br><br>
+                
+                
+      
         
               </div>
     
