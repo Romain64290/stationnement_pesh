@@ -8,15 +8,7 @@ body {
 	padding-bottom:10px;
 	text-align:center;
 }
-.container {
-	background-color: #FFFFFF;
-	border: 1px solid #DEDEDE;
-	border-radius: 12px;
-	margin-top:16px;
-	max-width:800px;
-	padding:24px 36px 24px 36px;
-	animation: fadein2 1.5s;
-}
+
 @keyframes fadein2 {
     from {
         opacity:0;
@@ -25,18 +17,6 @@ body {
     to {
         opacity:1;
     }
-}
-
-.picto1{
-	background-image:url(../img/picto01.png);
-	background-position:98% 16px;
-	background-repeat:no-repeat;
-}
-
-.picto2{
-	background-image:url(../img/picto02.png);
-	background-position:98% 16px;
-	background-repeat:no-repeat;
 }
 
     .box{
