@@ -1,50 +1,75 @@
+<?php
+
+/***** Dernière modification : 19/07/2017, Romain TALDU	*****/
+
+require(__DIR__ .'/../../include/config.inc.php');
+
+?>
 <!DOCTYPE html>
-<html lang="en">
 
-<head>
-
+<html>
+  <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Stationnement de la Ville de PAU</title>
-
-
-    <!-- Bootstrap theme -->
-   <!-- A supp si pas utile <link href="vendor/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet"> -->
-	<link href="css/dropzone.css" rel="stylesheet">
-        <link href="css/cedric.css" rel="stylesheet">
-
-        
-    <!-- Bootstrap Core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Theme CSS -->
-    <link href="css/freelancer.min.css" rel="stylesheet">
+    <title><?php echo constant("TITLE"); ?></title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="../../include/css/bootstrap.css">
+     <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../plugins/font-awesome-4.6.3/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="../../plugins/ionicons-2.0.1/css/ionicons.min.css">
+<!-- Theme CSS -->
+    <link rel="stylesheet" href="css/freelancer.min.css" >
+    
+        <link rel="stylesheet" href="css/cedric.css" >
 
     <!-- Custom Fonts -->
-    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+  
 <style>
 header{
 background: #188abc;
 }
-
 section.success{
 background: #188abc;
 }
 
+.profile-header div {
+display: inline-block;
+vertical-align: bottom;
+float: none;
+margin: -2px;
+	}
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  background: red;
+  cursor: inherit;
+  display: block;
+}
+input[readonly] {
+  background-color: white !important;
+  cursor: text !important;
+}
 </style>
+
+
 </head>
 
 <body id="page-top" class="index">
@@ -111,8 +136,9 @@ background: #188abc;
                 </div>
             </div>
             
-<!-- début formulaire (1er bloc) -->
-<div class="container picto1">
+<form name="formulaire" role="form" class="form-horizontal" data-toggle="validator" action="upload.php" method="post" enctype="multipart/form-data">
+   
+    
 	<div class="row">
 		<div class="col-sm-3"></div>
 			<div class="col-sm-7">
@@ -123,12 +149,13 @@ background: #188abc;
 				<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="madame"> Madame
 				</label>
 			 </div>
-		<form class="form-horizontal" data-toggle="validator">
+		
 			  <div class="form-group">
 					<label for="nomsociete" class="col-sm-3 control-label">Nom</label>
 					<div class="col-sm-7">
 						<input type="text" class="form-control" id="nomsociete" placeholder="Nom" required>
 						<span class="glyphicon form-control-feedback" style="margin-right:20px" aria-hidden="true"></span>
+                                                <div class="help-block with-errors"></div>
 					</div>
 			  </div>
 			  <div class="form-group">
@@ -136,6 +163,7 @@ background: #188abc;
 				<div class="col-sm-7">
 					<input type="text" class="form-control" id="prenom" placeholder="Prénom" required>
 					<span class="glyphicon form-control-feedback" style="margin-right:20px" aria-hidden="true"></span>
+                                        <div class="help-block with-errors"></div>
 				</div>
 			  </div>
 			  <div class="form-group">
@@ -152,19 +180,20 @@ background: #188abc;
 					<div class="col-sm-7">
 						  <input type="text" class="form-control" id="telcontact" placeholder="Plaque d'immatriculation de votre vehicule" required>
 						  <span class="glyphicon form-control-feedback" style="margin-right:20px" aria-hidden="true"></span>
+                                                  <div class="help-block with-errors"></div>
 					</div>
 				</div>
 	</div>
-</div>
-<!-- Formulaire (2ème bloc avec P.J.) -->
-<div class="container picto2">
-	<div class="row">
-    <label for="carte" class="col-sm-3 control-label"></label>
+
+
+
+ <div class="form-group">
+<label for="upload1" class="col-sm-3 control-label">Documents à transmettre</label>
 		<div class="col-sm-7">
-			<label class="radio" style="margin-bottom:15px">
+			<label class="radio" style="margin-bottom:15px;margin-left:20px;">
 				<input type="radio" id="Radio1b" name="colorRadio" value="red"> Bénéficiaire carte européenne de stationnement
 			</label>
-			<label class="radio" style="margin-bottom:15px">
+			<label class="radio" style="margin-bottom:15px;margin-left:20px;">
 				<input type="radio" id="Radio2b" name="colorRadio" value="green"> Professionnels de santé
 			</label>
 		    <div class="red box"><h4><span class="label label-info">Documents à transmettre:</span></h4><ul>
@@ -177,16 +206,34 @@ background: #188abc;
 				<li>Justificatif de qualité professionnelle</li>
 			</ul></div>
 		</div>
-</form>
-			<div class="col-sm-3"></div>
-				<form action="/file-upload" class="col-sm-7 dropzone">
-				<div class="col-sm-7 fallback">
-				<input name="fichierafacture" type="file" multiple required>
-			 </div>
-			 </form>
-	</div>
-</div>
 
+			<div class="col-sm-3"></div>
+				
+				<div class="col-sm-7">
+		  <div class="input-group">
+                <span class="input-group-btn">
+                  <span class="btn btn-primary btn-file">Document 1 &hellip; <input type="file" name="upload1" id="upload1" required>
+                  </span>
+                </span>
+                      <input type="text" class="form-control" readonly>
+                  </div><br>
+                                     <div class="input-group">
+                <span class="input-group-btn">
+                  <span class="btn btn-primary btn-file">Document 2 &hellip; <input type="file" name="upload2" id="upload2" required>
+                  </span>
+                </span>
+                 <input type="text" class="form-control" readonly>
+            </div>
+                   <div class="alert alert-block alert-danger" id="upload_div" style="display:none">
+      <strong>Attention !</strong>  Vous devez transmettre des documents ! 
+       </div>
+			 </div>
+	</div>
+
+    
+    
+    
+    
 <br>
 <div class="row" style="width:75%;margin:auto;text-align:center">
       <div class="button">
@@ -194,7 +241,7 @@ background: #188abc;
     </div>
 </div>
 
-
+</form>
         </div>
     </section>
 
@@ -266,6 +313,9 @@ background: #188abc;
         </div>
     </footer>
 
+        
+    
+    
  
 
     <!-- jQuery -->
@@ -277,9 +327,6 @@ background: #188abc;
     <!-- Plugin JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 
-    <!-- Contact Form JavaScript -->
-    <script src="js/jqBootstrapValidation.js"></script>
-    <script src="js/contact_me.js"></script>
 
     <!-- Theme JavaScript -->
     <script src="js/freelancer.min.js"></script>
@@ -287,8 +334,8 @@ background: #188abc;
       
     
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
- 	<script src="js/validator.js"></script>
-	<script src="js/dropzone.js"></script>
+ 	<script src="../../include/js/validator.js"></script>
+	
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/ie10-viewport-bug-workaround.js"></script>
 	
@@ -304,6 +351,58 @@ $(document).ready(function(){
     });
 });
 </script>
+
+ <script type="text/javascript">
+
+
+   $("form").on("submit", function() {
+
+$erreur="no";
+
+      if($('#upload1').val()<1 && $('#upload2').val()<1) {
+      	
+		
+        $("div.form-group").addClass("has-error");
+
+        $("#upload_div").show("slow").delay(6000).hide("slow");
+        
+         $erreur="ok";}
+
+   										 
+ 								 
+
+ 					 });
+
+
+$(document).on('change', '.btn-file :file', function() {
+  var input = $(this),
+      numFiles = input.get(0).files ? input.get(0).files.length : 1,
+      label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+  input.trigger('fileselect', [numFiles, label]);
+});
+
+$(document).ready( function() {
+    $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
+        
+        var input = $(this).parents('.input-group').find(':text'),
+            log = numFiles > 1 ? numFiles + ' files selected' : label;
+        
+        if( input.length ) {
+            input.val(log);
+        } else {
+            if( log ) alert(log);
+        }
+        
+    });
+});
+
+
+
+
+
+
+
+</SCRIPT>
     
 
 </body>

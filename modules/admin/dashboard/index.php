@@ -178,30 +178,37 @@ echo "
            
  
 <td style=\"width: 15%; text-align: center\">";
-if($etat_dde ==3) {echo "Refusée &nbsp; <a class=\"btn btn-danger btn-xs\" href=\"#\"><i class=\"fa fa-times fa-lg \"></i></a>";}
+
+if($etat_dde ==0) {echo "Nouvelle &nbsp; <a class=\"btn btn-info btn-xs\" href=\"#\"><i class=\"fa fa-question fa-lg\"></i></a>";}
 if($etat_dde ==1) {echo "En cours &nbsp; <a class=\"btn btn-warning btn-xs\" href=\"#\"><i class=\"fa fa-question fa-lg\"></i></a>";}
 if($etat_dde ==2) {echo "Validée &nbsp;  <a class=\"btn btn-success btn-xs\" href=\"#\"><i class=\"fa fa-check fa-lg\"></i></a>";}
+if($etat_dde ==3) {echo "Refusée &nbsp; <a class=\"btn btn-danger btn-xs\" href=\"#\"><i class=\"fa fa-times fa-lg \"></i></a>";}
+if($etat_dde ==4) {echo "Exportée &nbsp;  <a class=\"btn btn-default btn-xs\" href=\"#\"><i class=\"fa fa-check fa-lg\"></i></a>";}
 
 
 echo "</td><td style=\"width: 12%; text-align: center\">";
-    
 
+
+if($etat_dde !=4) {
 
 echo"<div class=\"form-group\">                    
  <select class=\"form-control\" onchange=\"onSelectChange($id_decla);\" id=\"select_$id_decla\">
  <option value=\"0\" >- Modifier -</option>";  
 					   
-if($etat_dde !=1) {echo "<option value=\"1\">Valider</option>";}
-if($etat_dde !=0) {echo " <option value=\"0\">En attente</option>";}
-if($etat_dde !=2) {echo "<option value=\"2\">Refuser</option>";}
+if($etat_dde !=1) {echo " <option value=\"0\">En cours</option>";}
+if($etat_dde !=2) {echo "<option value=\"2\">Validée</option>";}
+if($etat_dde !=3) {echo "<option value=\"2\">Refusée</option>";}
+
 						
 echo " </select>";
 
 
-                  echo " </div></td>
+                  echo " </div>";
+         }               
+                  echo"</td>
      
 
- <td style=\"width: 13%; text-align: center\"><a href=\"dossier_pdf.php?id_decla=$id_decla\" target=\"_blank\"><span class=\"label label-primary\"><i class=\"fa fa-download\"></i> &nbsp; PDF</span></a></td>    
+ <td style=\"width: 13%; text-align: center\"><a href=\"genere_pdf_pesh.php?id_decla=$id_decla\" target=\"_blank\"><span class=\"label label-primary\"><i class=\"fa fa-download\"></i> &nbsp; PDF</span></a></td>    
 <td style=\"width:23%; text-align: center\">
 
 | <a href=\"#\"> Justif. 1</a> | <a href=\"#\"> Justif. 2</a> | 

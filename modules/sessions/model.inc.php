@@ -152,7 +152,7 @@ $update->execute();
 $mail = new PHPMailer();
 // Encodage
 $mail->CharSet = 'UTF-8';
-
+$mail->Encoding = 'base64';
 
 
 $mail_membre=$result['email'];
@@ -175,7 +175,7 @@ Salutations<br>
 
 
 // Expediteur, adresse de retour et destinataire :
-$mail->SetFrom(FROM_EMAIL, "Agglomération Pau-Pyrénées"); //L'expediteur du mail
+$mail->SetFrom(FROM_EMAIL, "Ville de Pau"); //L'expediteur du mail
 $mail->AddReplyTo("NO-REPLY@agglo-pau.fr", "NO REPLY"); //Pour que l'usager réponde au mail
 // Si on a le nom : $mail->AddAddress("romain_taldu@hotmail.com", "Romain perso"); 
  //mail du destinataire
@@ -183,7 +183,7 @@ $mail->AddAddress($mail_membre);
 
 
 // Sujet du mail
-$mail->Subject = "DRH Formulaires - Modification de mot de passe";
+$mail->Subject = "Système de contrôle automatisé de stationnement - Modification de mot de passe";
 // Le message
 $mail->MsgHTML($body);
 

@@ -237,7 +237,7 @@ echo " </select>";}
 function onSelectChange($id){
    
 etat = document.getElementById("select_"+$id).value;
-document.location.href="change_etat.php?type=admin&id_membre="+$id+"&etat="+etat;
+document.location.href="change_etat.php?id_membre="+$id+"&etat="+etat;
 }
       
     </script>

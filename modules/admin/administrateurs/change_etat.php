@@ -15,7 +15,6 @@ $administrateurs = new administrateurs($connect);
 
 $id_membre=$_GET['id_membre'];
 $etat=$_GET['etat'];
-$type=$_GET['type'];
 
 // Met a jour l'etat de l'administrateur/AdP
 $administrateurs->changeEtat($id_membre,$etat);
@@ -30,5 +29,5 @@ $administrateurs->envoiMailValidation($mail_user);
 }
 
 
-if ($type=='admin'){header('Location:index.php');}else{header('Location:adp.php');}
+header('Location:index.php');
 ?>
