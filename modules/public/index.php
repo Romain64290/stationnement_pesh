@@ -4,6 +4,14 @@
 
 require(__DIR__ .'/../../include/config.inc.php');
 
+// verifie si la variable $valide existe => demande effectuée
+$valide = isset($_GET['valide']) ? $_GET['valide'] : NULL;
+
+// les session permettent de garder en memoire la saisie en cas de demande rejet pour mauvaise plaque d'immatriculation
+session_start();
+if(!isset($_SESSION['civilite'])){$_SESSION['civilite']=1;}
+
+
 ?>
 <!DOCTYPE html>
 
@@ -23,7 +31,9 @@ require(__DIR__ .'/../../include/config.inc.php');
 <!-- Theme CSS -->
     <link rel="stylesheet" href="css/freelancer.min.css" >
     
-        <link rel="stylesheet" href="css/cedric.css" >
+      <link rel="stylesheet" href="../../../plugins/sweetalert2/sweetalert2.min.css">
+    
+    <link rel="stylesheet" href="css/cedric.css" >
 
     <!-- Custom Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
@@ -72,7 +82,7 @@ input[readonly] {
 
 </head>
 
-<body id="page-top" class="index">
+<body id="page-top" class="index"  <?php if($valide=="ok"){echo"onload=\"Valide_ok();\"";} ?><?php if($valide=="no"){echo"onload=\"Valide_no();\"";} ?>>
 <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
 
     <!-- Navigation -->
@@ -143,42 +153,42 @@ input[readonly] {
 		<div class="col-sm-3"></div>
 			<div class="col-sm-7">
 				<label class="radio-inline" style="margin-bottom:15px">
-				<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="monsieur" checked> Monsieur
+				<input type="radio" name="civilite" id="civilite1" value="1" <?php if($_SESSION['civilite']==1)  {echo "checked";} ?>> Monsieur
 				</label>
 				<label class="radio-inline" style="margin-bottom:15px">
-				<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="madame"> Madame
+				<input type="radio" name="civilite" id="civilite2" value="2" <?php if($_SESSION['civilite']==2)  {echo "checked";} ?> > Madame
 				</label>
 			 </div>
 		
 			  <div class="form-group">
-					<label for="nomsociete" class="col-sm-3 control-label">Nom</label>
+					<label for="nom" class="col-sm-3 control-label">Nom</label>
 					<div class="col-sm-7">
-						<input type="text" class="form-control" id="nomsociete" placeholder="Nom" required>
+						<input type="text" class="form-control" id="nom" name="nom" placeholder="Nom" value="<?php if(isset($_SESSION['nom']))  {echo $_SESSION['nom'];} ?>" required>
 						<span class="glyphicon form-control-feedback" style="margin-right:20px" aria-hidden="true"></span>
                                                 <div class="help-block with-errors"></div>
 					</div>
 			  </div>
 			  <div class="form-group">
-				<label for="nomcontact" class="col-sm-3 control-label">Prénom</label>
+				<label for="prenom" class="col-sm-3 control-label">Prénom</label>
 				<div class="col-sm-7">
-					<input type="text" class="form-control" id="prenom" placeholder="Prénom" required>
+                                        <input type="text" class="form-control" id="prenom" name="prenom" placeholder="Prénom" value="<?php if(isset($_SESSION['prenom']))  {echo $_SESSION['prenom'];} ?>" required>
 					<span class="glyphicon form-control-feedback" style="margin-right:20px" aria-hidden="true"></span>
                                         <div class="help-block with-errors"></div>
 				</div>
 			  </div>
 			  <div class="form-group">
-				<label for="emailcontact" class="col-sm-3 control-label">Adresse courriel</label>
+				<label for="email" class="col-sm-3 control-label">Adresse courriel</label>
 					<div class="col-sm-7">
-						 <input type="email" class="form-control" id="emailcontact" placeholder="Adresse électronique" required>
+						 <input type="email" class="form-control" id="email" name="email" placeholder="Adresse électronique" value="<?php if(isset($_SESSION['email']))  {echo $_SESSION['email'];} ?>" required>
 						<span class="glyphicon form-control-feedback" style="margin-right:20px"  aria-hidden="true"></span>
 						<div class="help-block with-errors"></div> 
 					</div>
 			  </div>
   
 				<div class="form-group">
-				<label for="telcontact" class="col-sm-3 control-label">Immatriculation</label>
+				<label for="immatriculation" class="col-sm-3 control-label">Immatriculation</label>
 					<div class="col-sm-7">
-						  <input type="text" class="form-control" id="telcontact" placeholder="Plaque d'immatriculation de votre vehicule" required>
+						  <input type="text" class="form-control" id="immatriculation" name="immatriculation" placeholder="Plaque d'immatriculation de votre vehicule" value="<?php if(isset($_SESSION['immatriculation']))  {echo $_SESSION['immatriculation'];} ?>" required>
 						  <span class="glyphicon form-control-feedback" style="margin-right:20px" aria-hidden="true"></span>
                                                   <div class="help-block with-errors"></div>
 					</div>
@@ -187,25 +197,26 @@ input[readonly] {
 
 
 
- <div class="form-group">
-<label for="upload1" class="col-sm-3 control-label">Documents à transmettre</label>
+
+<label for="type_decla" class="col-sm-3 control-label">Documents à transmettre</label>
 		<div class="col-sm-7">
+                     <div class="form-group">
 			<label class="radio" style="margin-bottom:15px;margin-left:20px;">
-				<input type="radio" id="Radio1b" name="colorRadio" value="red"> Bénéficiaire carte européenne de stationnement
+				<input type="radio"  name="type_decla" value="pmr" required> Bénéficiaire carte européenne de stationnement
 			</label>
 			<label class="radio" style="margin-bottom:15px;margin-left:20px;">
-				<input type="radio" id="Radio2b" name="colorRadio" value="green"> Professionnels de santé
+				<input type="radio"  name="type_decla" value="pro" required> Professionnels de santé
 			</label>
-		    <div class="red box"><h4><span class="label label-info">Documents à transmettre:</span></h4><ul>
-				<li >Carte grise</li>
-				<li>Carte de stationnement</li>
+		    <div class="pmr box"><h4><span class="label label-info">Documents à transmettre:</span></h4><ul>
+				<li >Document 1 : Carte grise</li>
+				<li>Document 2 : Carte de stationnement</li>
 				</ul>
 			</div>
-			<div class="green box"><h4><span class="label label-info">Documents à transmettre:</span></h4><ul>
-				<li>Carte grise</li>
-				<li>Justificatif de qualité professionnelle</li>
+			<div class="pro box"><h4><span class="label label-info">Documents à transmettre:</span></h4><ul>
+				<li>Document 1 : Carte grise</li>
+				<li>Document 2 : Justificatif de qualité professionnelle</li>
 			</ul></div>
-		</div>
+		</div></div>
 
 			<div class="col-sm-3"></div>
 				
@@ -237,7 +248,7 @@ input[readonly] {
 <br>
 <div class="row" style="width:75%;margin:auto;text-align:center">
       <div class="button">
-        <button class="btn btn-primary btn-lg" type="submit" style="margin-bottom:36px" >Envoyez</button>
+        <button class="btn btn-primary btn-lg" type="submit" style="margin-bottom:36px" >Envoyer</button>
     </div>
 </div>
 
@@ -331,7 +342,7 @@ input[readonly] {
     <!-- Theme JavaScript -->
     <script src="js/freelancer.min.js"></script>
     
-      
+    <script src="../../../plugins/sweetalert2/sweetalert2.min.js"></script>
     
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
  	<script src="../../include/js/validator.js"></script>
@@ -339,8 +350,8 @@ input[readonly] {
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/ie10-viewport-bug-workaround.js"></script>
 	
-	<!-- Pour afficher texte quand clic bouton radio -->
-	<script type="text/javascript">
+<!-- Pour afficher texte quand clic bouton radio -->
+<script type="text/javascript">
             
 $(document).ready(function(){
     $('input[type="radio"]').click(function(){
@@ -368,9 +379,6 @@ $erreur="no";
         
          $erreur="ok";}
 
-   										 
- 								 
-
  					 });
 
 
@@ -397,11 +405,28 @@ $(document).ready( function() {
 });
 
 
+function Valide_ok() {
+  	  
+  swal({
+  title: 'Demande d\'inscription enregistrée !',
+  text: "Vous serez informé(e) email du traitement de votre demande.",
+  type: 'success',
+
+})
+    
+ }     
 
 
+function Valide_no() {
+  	  
+  swal({
+  title: 'Demande d\'inscription refusée !',
+  text: "La plaque d'immatriculation saisie n'est pas conforme.",
+  type: 'error',
 
-
-
+})
+    
+ } 
 </SCRIPT>
     
 

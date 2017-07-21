@@ -94,7 +94,7 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
             <span class="info-box-icon bg-aqua"><i class="fa fa-wheelchair"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">PESH</span>
+              <span class="info-box-text">PMR</span>
               <span class="info-box-number">90</span>
             </div>
             <!-- /.info-box-content -->
@@ -108,7 +108,7 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
 
             <div class="info-box-content">
               <span class="info-box-text">Pro. Santé</span>
-              <span class="info-box-number">47</span>
+              <span class="info-box-number">37</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -137,6 +137,7 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
                       <tr>
                       	<th style=" text-align: center">#</th>
                         <th>Nom /Prenom</th>
+                         <th style=" text-align: center">Immatriculation</th>
                         <th style=" text-align: center">Etat demande</th>
                         <th style=" text-align: center">Modif. Etat</th>
                          <th style=" text-align: center">Dossier</th>
@@ -174,7 +175,8 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
 echo "
 <tr>
      <td style=\"width:3%; text-align: left\">$compteur</td>
-     <td style=\"width: 25%; text-align: left\">$nom $prenom </td>
+     <td style=\"width: 20%; text-align: left\">$nom $prenom </td>
+     <td style=\"width: 10%; text-align: center\">$immatriculation </td>
            
  
 <td style=\"width: 15%; text-align: center\">";
@@ -208,8 +210,8 @@ echo " </select>";
                   echo"</td>
      
 
- <td style=\"width: 13%; text-align: center\"><a href=\"genere_pdf_pesh.php?id_decla=$id_decla\" target=\"_blank\"><span class=\"label label-primary\"><i class=\"fa fa-download\"></i> &nbsp; PDF</span></a></td>    
-<td style=\"width:23%; text-align: center\">
+ <td style=\"width: 11%; text-align: center\"><a href=\"genere_pdf_pmr.php?id_decla=$id_decla\" target=\"_blank\"><span class=\"label label-primary\"><i class=\"fa fa-download\"></i> &nbsp; PDF</span></a></td>    
+<td style=\"width:20%; text-align: center\">
 
 | <a href=\"#\"> Justif. 1</a> | <a href=\"#\"> Justif. 2</a> | 
 

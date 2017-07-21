@@ -93,7 +93,7 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
                   <h3><u> Etape 1 :  Générer le fichier d'export </u></h3>
                 
                   Téléchargez le fichier et importez le dans le logciel AFS2R.<br>
-                  <u>Remarque :</u> Lorsque cette étape est activé, il est impossible pour les autres utilsateurs de modifiers les demandes en cours.
+                  <u>Remarque :</u> Lorsque cette étape est activée, il est impossible pour les autres utilsateurs de modifier les demandes en cours.
                   <br> <br>
                   
                  
@@ -106,7 +106,7 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
                   
                   <br><br>
               <h3><u>Etape 2 : Finaliser l'export</u></h3>
-              Si l'export dans le logiciel metier s'est correctement déroulé vous pouvez archiver les demandes validée, sinon vous pouvez annuler l'export pour re-essayer ultérieurment.<br><br>
+              Si l'export dans le logiciel métier s'est correctement déroulé vous pouvez archiver les demandes validées, sinon vous pouvez annuler l'export pour re-essayer ultérieurement.<br><br>
               
               <button type="button" class="btn btn-danger" disabled="true">Annuler l'export </button> &nbsp;&nbsp;&nbsp;&nbsp;   <button type="button" class="btn btn-success" disabled="true">Valider l'export</button>   <br><br><br>
                 

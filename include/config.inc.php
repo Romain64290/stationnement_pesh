@@ -39,3 +39,9 @@
   //balise <title>
   define("TITLE", "Contrôle automatisé du stationnement");
   
+      // URL-CHEMIN_UPLOAD
+  define('CHEMIN_UPLOAD', '/var/www/stationnement/modules/public/upload/');
+  
+   // MAX-SIZE-UPLOAD
+  define('MAX-SIZE-UPLOAD', '1000000000');
+  
