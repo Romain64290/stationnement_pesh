@@ -2,7 +2,7 @@
 
 /***** Dernière modification : 29/09/2016, Romain TALDU	*****/
 
- class dashboard {
+ class export {
 
     private $con;
 
@@ -631,7 +631,97 @@
  return $quantite;
  
   } 
+
+   /***********************************************************************
+ * Affiche de l'etat d'exportation
+ **************************************************************************/
+  
+ function etatExport()
+  {
+  
+  try{
+  		
+		$select = $this->con->prepare('SELECT *
+		FROM export_en_cours
+                WHERE id = 1');
+                
+                $select->execute();
+		
+		$data = $select->fetch();
+		
+		}
+		
+	 catch (PDOException $e){
+       echo $e->getMessage() . " <br><b>Erreur lors l'affichage de l'etat d'export</b>\n";
+	throw $e;
+        exit;
+    }
+	 
+ return $data['etat'];
+ 
+  } 
+     /***********************************************************************
+ * Update exportEnCours (Encours)
+ **************************************************************************/
+  
+ function exportEnCoursEncours()
+  {
+try{	
+$update = $this->con->prepare('UPDATE export_en_cours SET etat = 1  WHERE id = 1'); 
+	    	
+$update->execute();	
+	}
 	
+	 catch (Exception $e) {
+            echo $e->getMessage() . " <br><b>Erreur lors l'update exportEnCours (Encours)</b>\n";
+            throw $e;
+        }		
+
+  }
+ 
+       /***********************************************************************
+ * Update exportEnCours (Abort)
+ **************************************************************************/
+  
+ function exportEnCoursAbort()
+  {
+try{	
+$update = $this->con->prepare('UPDATE export_en_cours SET etat = 0  WHERE id = 1'); 
+	    	
+$update->execute();	
+	}
+	
+	 catch (Exception $e) {
+            echo $e->getMessage() . " <br><b>Erreur lors l'update exportEnCours (Abort)</b>\n";
+            throw $e;
+        }		
+
+  }
+ 
+  
+         /***********************************************************************
+ * Update exportEnCours (ok)
+ **************************************************************************/
+  
+ function exportEnCoursOk()
+  {
+try{	
+$update = $this->con->prepare('UPDATE export_en_cours SET etat = 0  WHERE id = 1'); 
+	    	
+$update->execute();	
+	}
+	
+	 catch (Exception $e) {
+            echo $e->getMessage() . " <br><b>Erreur lors l'update exportEnCours (Abort)</b>\n";
+            throw $e;
+        }
+        
+   // update les statuts valide en exporte
+   // calcul date limite de validité
+   // envoie mail de confirmation
+
+  }
+  
     }
 
 

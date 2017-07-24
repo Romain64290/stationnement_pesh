@@ -13,7 +13,7 @@ require(__DIR__ .'/model.inc.php');
 $connect = new connection();
 $dashboard = new dashboard($connect);
 
-
+$etatExport=$dashboard->etatExport();
 
 ?>
 
@@ -83,7 +83,7 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
 
             <div class="info-box-content">
               <span class="info-box-text">Nombre demandes</span>
-              <span class="info-box-number">127</span>
+              <span class="info-box-number"><?php $dashboard->afficheNbreDemandes();?></span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -95,7 +95,7 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
 
             <div class="info-box-content">
               <span class="info-box-text">PMR</span>
-              <span class="info-box-number">90</span>
+              <span class="info-box-number"><?php $dashboard->afficheNbrePmr();?></span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -108,7 +108,7 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
 
             <div class="info-box-content">
               <span class="info-box-text">Pro. Santé</span>
-              <span class="info-box-number">37</span>
+              <span class="info-box-number"><?php $dashboard->afficheNbrePro();?></span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -164,6 +164,9 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
                  $immatriculation=htmlspecialchars($key->immatriculation);
                  $etat_dde=$key->etat_dde;
                  $date_validite=$key->date_validite;
+                 $dossier=$key->dossier;
+                 $justificatif1=$key->justificatif1;
+                 $justificatif2=$key->justificatif2;
                  
  if($date_validite=="0000-00-00 00:00:00") {$date_validite="";} else{
    $date_validite= explode(" ", $date_validite);
@@ -191,7 +194,7 @@ if($etat_dde ==4) {echo "Exportée &nbsp;  <a class=\"btn btn-default btn-xs\" h
 echo "</td><td style=\"width: 12%; text-align: center\">";
 
 
-if($etat_dde !=4) {
+if($etat_dde !=4 AND $etatExport==0) {
 
 echo"<div class=\"form-group\">                    
  <select class=\"form-control\" onchange=\"onSelectChange($id_decla);\" id=\"select_$id_decla\">
@@ -206,14 +209,24 @@ echo " </select>";
 
 
                   echo " </div>";
-         }               
-                  echo"</td>
+         }      else{ echo"Export en cours...";}         
+                  echo"</td>";
      
 
- <td style=\"width: 11%; text-align: center\"><a href=\"genere_pdf_pmr.php?id_decla=$id_decla\" target=\"_blank\"><span class=\"label label-primary\"><i class=\"fa fa-download\"></i> &nbsp; PDF</span></a></td>    
+ if($type_decla==1){  
+ echo"<td style=\"width: 11%; text-align: center\"><a href=\"genere_pdf_pmr.php?id_decla=$id_decla\" target=\"_blank\"><span class=\"label label-primary\"><i class=\"fa fa-download\"></i> &nbsp; PDF</span></a></td>";}
+ else{
+  echo"<td style=\"width: 11%; text-align: center\"><a href=\"genere_pdf_pro.php?id_decla=$id_decla\" target=\"_blank\"><span class=\"label label-primary\"><i class=\"fa fa-download\"></i> &nbsp; PDF</span></a></td>";    
+ }
+
+ 
+     
+
+
+echo"
 <td style=\"width:20%; text-align: center\">
 
-| <a href=\"#\"> Justif. 1</a> | <a href=\"#\"> Justif. 2</a> | 
+| <a href=\"../../public/upload/$dossier/$justificatif1\" target=\"_blank\"> Justif. 1</a> | <a href=\"../../public/upload/$dossier/$justificatif2\" target=\"_blank\"> Justif. 2</a> | 
 
 
 </td>

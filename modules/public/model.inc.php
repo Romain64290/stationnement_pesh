@@ -16,14 +16,14 @@ class publique {
  * Insertion des facture dans la base de donnees par une societe
 ***************************************************************************/
  
- function save_demande($civilite,$type_decla,$nom,$prenom,$email,$immat,$uniqid)
+ function save_demande($civilite,$type_decla,$nom,$prenom,$email,$immat,$uniqid,$justificatif1,$justificatif2)
   {
   
   	try {
 				
 			
-$insert = $this->con->prepare('INSERT INTO decla_immat (type_decla, civilite,nom,prenom,email,immatriculation,date_decla,ip_adresse,dossier)
-VALUES(:type_decla, :civilite,:nom,:prenom,:email,:immatriculation,:date_decla,:ip_adresse,:dossier)');
+$insert = $this->con->prepare('INSERT INTO decla_immat (type_decla, civilite,nom,prenom,email,immatriculation,date_decla,ip_adresse,dossier,justificatif1,justificatif2)
+VALUES(:type_decla, :civilite,:nom,:prenom,:email,:immatriculation,:date_decla,:ip_adresse,:dossier,:justificatif1,:justificatif2)');
  
 $insert->bindParam(':type_decla', $type_decla, PDO::PARAM_INT);
 $insert->bindParam(':civilite', $civilite, PDO::PARAM_INT);
@@ -34,6 +34,8 @@ $insert->bindParam(':immatriculation', $immat, PDO::PARAM_STR);
 $insert->bindValue(':date_decla', date('Y-m-d H:i:s'),PDO::PARAM_STR);
 $insert->bindValue(':ip_adresse', $_SERVER['REMOTE_ADDR'],PDO::PARAM_STR);
 $insert->bindParam(':dossier', $uniqid, PDO::PARAM_STR);
+$insert->bindParam(':justificatif1', $justificatif1, PDO::PARAM_STR);
+$insert->bindParam(':justificatif2', $justificatif2, PDO::PARAM_STR);
 
 $execute=$insert->execute();		
 
@@ -60,7 +62,7 @@ if(!is_dir($destination_factures)){mkdir($destination_factures, 0775, true);}
      
 $ext = pathinfo($file['name'], PATHINFO_EXTENSION);   
 
-$maxsize=1201452111452;
+$maxsize=5485760;
 
 	
  $destination=$destination_factures.$num_document.".".$ext;  

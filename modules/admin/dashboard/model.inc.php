@@ -10,6 +10,93 @@
         $this->con = $con->con;
     }
 
+  /***********************************************************************
+ * Affiche nombre de demandes
+ **************************************************************************/
+  
+ function afficheNbreDemandes()
+  {
+      
+	try{
+$select = $this->con->prepare('SELECT COUNT(*) as nbr 
+FROM decla_immat');
+
+$select->execute();
+	}
+	 catch (PDOException $e){
+       echo $e->getMessage() . " <br><b>Erreur lors du calcul du nombre de demandes </b>\n";
+	throw $e;
+        exit;
+    }
+
+$result = $select->fetch();
+
+$quantite=$result['nbr'];
+		
+	      echo $quantite;
+      
+   
+}  
+
+  /***********************************************************************
+ * Affiche nombre de Pmr
+ **************************************************************************/
+  
+ function afficheNbrePmr()
+  {
+      
+	try{
+$select = $this->con->prepare('SELECT COUNT(*) as nbr 
+FROM decla_immat
+WHERE type_decla = 1');
+
+$select->execute();
+	}
+	 catch (PDOException $e){
+       echo $e->getMessage() . " <br><b>Erreur lors du calcul du nombre de demandes PMR</b>\n";
+	throw $e;
+        exit;
+    }
+
+$result = $select->fetch();
+
+$quantite=$result['nbr'];
+		
+	      echo $quantite;
+      
+   
+}  
+
+
+  /***********************************************************************
+ * Affiche nombre de Pro
+ **************************************************************************/
+  
+ function afficheNbrePro()
+  {
+      
+	try{
+$select = $this->con->prepare('SELECT COUNT(*) as nbr 
+FROM decla_immat
+WHERE type_decla = 2');
+
+$select->execute();
+	}
+	 catch (PDOException $e){
+       echo $e->getMessage() . " <br><b>Erreur lors du calcul du nombre de demandes PRO </b>\n";
+	throw $e;
+        exit;
+    }
+
+$result = $select->fetch();
+
+$quantite=$result['nbr'];
+		
+	      echo $quantite;
+      
+   
+}  
+   
 /***********************************************************************
  * Affiche liste des demandes
  **************************************************************************/
@@ -38,7 +125,72 @@
  return $data;
  
   } 
+  
+  
+   
+/***********************************************************************
+ * Affiche un Inscrit
+ **************************************************************************/
+  
+ function afficheInscrit($id_decla)
+  {
+  
+  try{
+  		
+		$select = $this->con->prepare('SELECT *
+		FROM decla_immat
+                WHERE id_decla = :id_decla');
+                
+                $select->bindParam(':id_decla', $id_decla, PDO::PARAM_INT);
+		
+		$select->execute();
+		
+		$data = $select->fetch();
+		
+		}
+		
+	 catch (PDOException $e){
+       echo $e->getMessage() . " <br><b>Erreur lors l'affichage d'un inscrit</b>\n";
+	throw $e;
+        exit;
+    }
+	 
+ return $data;
+ 
+  } 
+  
+  /***********************************************************************
+ * Affiche de l'etat d'exportation
+ **************************************************************************/
+  
+ function etatExport()
+  {
+  
+  try{
+  		
+		$select = $this->con->prepare('SELECT *
+		FROM export_en_cours
+                WHERE id = 1');
+                
+                $select->execute();
+		
+		$data = $select->fetch();
+		
+		}
+		
+	 catch (PDOException $e){
+       echo $e->getMessage() . " <br><b>Erreur lors l'affichage de l'etat d'export</b>\n";
+	throw $e;
+        exit;
+    }
+	 
+ return $data['etat'];
+ 
+  }
 	
+
+  
+  
     }
 
 

@@ -12,17 +12,13 @@ require(__DIR__ .'/model.inc.php');
 $connect = new connection();
 $dashboard = new dashboard($connect);
 
-//$id_reunion=$_GET['id_reunion'];
+$id_decla=$_GET['id_decla'];
 
-//$afficheReunion=$compostage->infosReunion($id_reunion);
-//$aficheInscrits=$compostage->afficheInscrits($id_reunion);
+$aficheInscrit=$dashboard->afficheInscrit($id_decla);
 
-
-/*$date_expl=explode(" ",$afficheReunion[2]);
-$heure=explode(":",$date_expl[1]);
-$heure=$heure[0].":".$heure[1];
-$date_debut=explode("-",$date_expl[0]);
-*/
+$date_expl=explode(" ",$aficheInscrit['date_decla']);
+$date_expl=explode("-",$date_expl[0]);
+$date_decla="$date_expl[2]/$date_expl[1]/$date_expl[0]";
 
  ?>
 <!DOCTYPE html>
@@ -110,15 +106,17 @@ Professionnels de santé
 </div>
 <div class="maintext">
 « Je soussigné, <b>
-<!-- inserer code pour afficher M./Mme-->
-<!-- inserer code pour afficher nom-->
-<!-- inserer code pour afficher prénom-->
+<?php
+ if($aficheInscrit['civilite']==1){echo "M. ";}else{echo"Mme ";}
+ echo htmlspecialchars($aficheInscrit['prenom']); echo" ";echo htmlspecialchars($aficheInscrit['nom']);
+
+ ?>
 </b>
 <br><br><b>déclare</b><br>
 - être titulaire d'un caducée médical en cours de validité (date de fin de validité . . / . . / . . . . ), pour lequel je joins un justificatif (attestation d'inscription à l'ordre des médecins/infirmiers, attestation d'employeur, etc.) au présent dossier,
 <br><br>
 - utiliser le véhicule immatriculé <b>
-<!-- inserer code pour afficher plaque d'immatriculation-->
+<?php echo htmlspecialchars($aficheInscrit['immatriculation']); ?>
 </b> comme véhicule principal dans le cadre d'inter ventions médicales au domicile de mes patients, et pour lequel je joins une copie de la carte grise au présent dossier,<br>
 - demander à la Ville de Pau de bien vouloir prendre en compte ce numéro d'immatriculation dans son système de contrôle
 automatisé du stationnement afin d'être identifié(e) comme professionnel de santé, conformément à :<br>
@@ -143,7 +141,7 @@ m'incombe de renouveler cette demande d'inscription à l'issue, en adressant un 
 Police municipale, ou bien en adressant un courriel à controle-stationnement@ville-pau.fr. Pour faciliter ce renouvellement de
 déclaration, j'autorise les services municipaux compétents à m'envoyer un message de rappel de fin d'échéance à l'adresse mail
 suivante <b>
-<!-- inserer code pour afficher mail-->
+<?php echo htmlspecialchars($aficheInscrit['email']); ?>
 </b> 45 jours avant la fin de validité de cette déclaration.<br><br>
 - avoir pris connaissance de mes droits concernant l'utilisation et l'accès à mes données personnelles tels que décrits ci-après :<br>
 <i>Les informations recueillies à partir de ce formulaire font l’objet d’un traitement informatique destiné à la Direction Préven-
@@ -160,8 +158,8 @@ Hôtel de Ville<br>
 Place Royale<br>
 64036 Pau Cedex</div></b><br>
 Je peux également, pour des motifs légitimes, m'opposer au traitement des données me concernant.* »<br><br><br>
-Fait à ..........................., le
-<!-- inserer code pour afficher date -->
+Fait le 
+<?php echo $date_decla; ?>
 </div> <!-- main text -->
 <br>
 <div class="visa"><b>

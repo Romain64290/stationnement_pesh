@@ -47,12 +47,15 @@ $televersement="ok";
 if($_FILES['upload1']['size'] > 0) {$resultat_upload1=$publique->uploadFractures($_FILES['upload1'],$destination_factures,1);}
 if($_FILES['upload2']['size'] > 0) {$resultat_upload2=$publique->uploadFractures($_FILES['upload2'],$destination_factures,2);}
 
-if((!$resultat_upload1) AND (!$resultat_upload2)) {Header("Location:erreur.html"); exit;} 
+if((!$resultat_upload1) OR (!$resultat_upload2)) {Header("Location:index.php?valide=upload#inscrire"); exit;} 
 
 else{
-	
+
+    $justificatif1 ="1.".pathinfo($_FILES['upload1']['name'], PATHINFO_EXTENSION);
+    $justificatif2 ="2.".pathinfo($_FILES['upload2']['name'], PATHINFO_EXTENSION);
+    
  // Insertion des elements dans 
-$publique->save_demande($_POST['civilite'],$type_decla,$_POST['nom'],$_POST['prenom'],$_POST['email'],$bonne_immat,$uniqid);
+$publique->save_demande($_POST['civilite'],$type_decla,$_POST['nom'],$_POST['prenom'],$_POST['email'],$bonne_immat,$uniqid,$justificatif1,$justificatif2);
     
     
 //envoiEmailConfirmation($_POST['email_societe'],$_FILES['upload1']['name'],$_FILES['upload2']['name'],$_FILES['upload3']['name'],$_FILES['upload4']['name'],$_FILES['upload5']['name']);		
@@ -62,13 +65,7 @@ $publique->save_demande($_POST['civilite'],$type_decla,$_POST['nom'],$_POST['pre
 }
 
 }
-
-
-
-
-   
-   
-   
+  
    
    
   
@@ -83,7 +80,7 @@ function verifImmatriculation($immatriculation, &$propre = null)
     }
     elseif (preg_match('#^[0-9]{1,4}(?:\s|-)?[a-hj-np-tv-z]{2,3}(?:\s|-)?(?:97[1-6]|0[1-9]|[1-8][0-9]|9[1-5]|2[ab])$#i', $immatriculation))
     {
-        $propre = strtoupper(preg_replace($p, '$1 $2 $3', $immatriculation));  
+        $propre = strtoupper(preg_replace($p, '$1-$2-$3', $immatriculation));  
         return $propre;
     }
     else

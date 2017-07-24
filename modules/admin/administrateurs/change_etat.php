@@ -30,4 +30,3 @@ $administrateurs->envoiMailValidation($mail_user);
 
 
 header('Location:index.php');
-?>

@@ -82,7 +82,7 @@ input[readonly] {
 
 </head>
 
-<body id="page-top" class="index"  <?php if($valide=="ok"){echo"onload=\"Valide_ok();\"";} ?><?php if($valide=="no"){echo"onload=\"Valide_no();\"";} ?>>
+<body id="page-top" class="index"  <?php if($valide=="ok"){echo"onload=\"Valide_ok();\"";} ?><?php if($valide=="no"){echo"onload=\"Valide_no();\"";} ?><?php if($valide=="upload"){echo"onload=\"Valide_upload();\"";} ?>>
 <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
 
     <!-- Navigation -->
@@ -147,7 +147,7 @@ input[readonly] {
             </div>
             
 <form name="formulaire" role="form" class="form-horizontal" data-toggle="validator" action="upload.php" method="post" enctype="multipart/form-data">
-   
+
     
 	<div class="row">
 		<div class="col-sm-3"></div>
@@ -226,27 +226,28 @@ input[readonly] {
                   <span class="btn btn-primary btn-file">Document 1 &hellip; <input type="file" name="upload1" id="upload1" required accept="application/pdf,image/*">
                   </span>
                 </span>
-                      <input type="text" class="form-control" readonly>
+                      <input type="text" class="form-control" readonly placeholder="5 Mo max par fichier">
                   </div><br>
                                      <div class="input-group">
                 <span class="input-group-btn">
                   <span class="btn btn-primary btn-file">Document 2 &hellip; <input type="file" name="upload2" id="upload2" required accept="application/pdf,image/*">
                   </span>
                 </span>
-                 <input type="text" class="form-control" readonly>
+                                         <input type="text" class="form-control" readonly placeholder="5 Mo max par fichier">
             </div>
-                   <div class="alert alert-block alert-danger" id="upload_div" style="display:none">
+                  <div class="alert alert-block alert-danger" id="upload_div" style="display:none">
       <strong>Attention !</strong>  Vous devez transmettre des documents ! 
        </div>
 			 </div>
 	</div>
 
     
-    
+        
     
     
 <br>
 <div class="row" style="width:75%;margin:auto;text-align:center">
+   <!--  <div style="color:red"align="center"> Taille maximale :  5 Mo par fichier </div><br><br> -->
       <div class="button">
         <button class="btn btn-primary btn-lg" type="submit" style="margin-bottom:36px" >Envoyer</button>
     </div>
@@ -414,7 +415,19 @@ function Valide_ok() {
 
 })
     
- }     
+ }  
+ 
+ function Valide_upload() {
+  	  
+  swal({
+  title: 'Demande d\'inscription refusée !',
+  text: "Un problème est survenu dans le transfert de fichiers.",
+  type: 'error',
+
+})
+    
+ }
+ 
 
 
 function Valide_no() {

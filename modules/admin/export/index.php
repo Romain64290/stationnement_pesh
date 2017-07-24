@@ -11,9 +11,9 @@ require(__DIR__ .'/model.inc.php');
 
 // préparation connexion
 $connect = new connection();
-$dashboard = new dashboard($connect);
+$export = new export($connect);
 
-
+$etatExport=$export->etatExport();
 
 ?>
 
@@ -98,7 +98,7 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
                   
                  
 
-  <button type="button" class="btn btn-primary"><i class="fa fa-download"></i> &nbsp; Télécharger le fichier *.csv</button>
+                  <button type="button" class="btn btn-primary" onclick="location.href='export.php?export=encours';"><i class="fa fa-download"></i> &nbsp; Télécharger le fichier *.csv</button>
      
         
 
@@ -108,7 +108,13 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
               <h3><u>Etape 2 : Finaliser l'export</u></h3>
               Si l'export dans le logiciel métier s'est correctement déroulé vous pouvez archiver les demandes validées, sinon vous pouvez annuler l'export pour re-essayer ultérieurement.<br><br>
               
-              <button type="button" class="btn btn-danger" disabled="true">Annuler l'export </button> &nbsp;&nbsp;&nbsp;&nbsp;   <button type="button" class="btn btn-success" disabled="true">Valider l'export</button>   <br><br><br>
+              <button type="button" class="btn btn-danger" 
+                  <?php  if($etatExport==0){echo "disabled=`\"true\"";} ?>
+                      onclick="location.href='export.php?export=abort';">Annuler l'export </button> &nbsp;&nbsp;&nbsp;&nbsp;   
+                      
+              <button type="button" class="btn btn-success" 
+                  <?php  if($etatExport==0){echo "disabled=`\"true\"";} ?>
+                      onclick="location.href='export.php?export=ok';">Valider l'export</button>   <br><br><br>
                 
                 
       

@@ -12,17 +12,13 @@ require(__DIR__ .'/model.inc.php');
 $connect = new connection();
 $dashboard = new dashboard($connect);
 
-//$id_reunion=$_GET['id_reunion'];
+$id_decla=$_GET['id_decla'];
 
-//$afficheReunion=$compostage->infosReunion($id_reunion);
-//$aficheInscrits=$compostage->afficheInscrits($id_reunion);
+$aficheInscrit=$dashboard->afficheInscrit($id_decla);
 
-
-/*$date_expl=explode(" ",$afficheReunion[2]);
-$heure=explode(":",$date_expl[1]);
-$heure=$heure[0].":".$heure[1];
-$date_debut=explode("-",$date_expl[0]);
-*/
+$date_expl=explode(" ",$aficheInscrit['date_decla']);
+$date_expl=explode("-",$date_expl[0]);
+$date_decla="$date_expl[2]/$date_expl[1]/$date_expl[0]";
 
  ?>
 <!DOCTYPE html>
@@ -110,21 +106,24 @@ ou de la carte mobilité inclusion (CMI)
 </div>
 <div class="maintext">
 « Je soussigné, <b>
-<!-- inserer code pour afficher M./Mme-->
-<!-- inserer code pour afficher nom-->
-<!-- inserer code pour afficher prénom-->
+<?php
+ if($aficheInscrit['civilite']==1){echo "M. ";}else{echo"Mme ";}
+ echo htmlspecialchars($aficheInscrit['prenom']); echo" ";echo htmlspecialchars($aficheInscrit['nom']);
+
+ ?>
+
 </b>
 <br><br><b>déclare</b><br>
-- être titulaire d'une carte européenne de stationnement pour personnes handicapées ou d'une carte mobilité inclusion (CMI) comportant la mention "stationnement" en cours de validité (date de fin de validité . . / . . / . . . . ), dont je joins une copie au présent dossier,
+- être titulaire d'une carte européenne de stationnement pour personnes handicapées ou d'une carte mobilité inclusion (CMI) comportant la mention "stationnement" en cours de validité, dont je joins une copie au présent dossier,
 <br><br>
 - être propriétaire ou utilisateur régulier du véhicule immatriculé <b>
-<!-- inserer code pour afficher plaque d'immatriculation-->
+<?php echo htmlspecialchars($aficheInscrit['immatriculation']); ?>
 </b>, dont je joins une copie de la carte grise au présent dossier,<br><br>
 - demande à la Ville de Pau de bien vouloir prendre en compte ce numéro d'immatriculation dans son système de contrôle automatisé du stationnement payant, conformément à l'article L. 241-3-2 du code de l'action sociale accordant la gratuité du stationnement sur voirie aux titulaires de l'une des cartes de stationnement précitées.<br><br>
 - avoir pris connaissance du fait que cette déclaration ne me dispense pas d'apposer ma carte de stationnement sur le tableau de bord de ce véhicule lorsque je l'utilise ou lorsque celui-ci est utilisé pour me véhiculer, afin de permettre les opérations de contrôle. Dans l'éventualité où je serais amené(e) à utiliser un autre véhicule que celui déclaré, je procéderai à une déclaration temporaire de celui-ci directement sur l'horodateur le plus proche de mon lieu de stationnement, en prenant garde d'apposer ma carte de stationnement sur le tableau de bord dudit véhicule.<br><br>
 - m'engager à communiquer à l'accueil de la Police municipale tout changement concernant cette déclaration (changement de véhicule, etc.).<br><br>
 - avoir pris connaissance du fait que cette déclaration est valable deux ans (sauf changement de situation préalable), et qu'il m'incombe de renouveler cette demande d'inscription à l'issue, en adressant un courrier ou me présentant à l'accueil de la Police municipale, ou bien en adressant un courriel à controle-stationnement@ville-pau.fr. Pour faciliter ce renouvellement de déclaration, j'autorise les services municipaux compétents à m'envoyer un message de rappel de fin d'échéance à l'adresse mail suivante: <b>
-<!-- inserer code pour afficher mail-->
+<?php echo htmlspecialchars($aficheInscrit['email']); ?>
 </b> 45 jours avant la fin de validité de cette déclaration.<br><br>
 - avoir pris connaissance de mes droits concernant l'utilisation et l'accès à mes données personnelles tels que décrits ci-après :<br>
 <i>Les informations recueillies à partir de ce formulaire font l’objet d’un traitement informatique destiné à la Direction Préven-
@@ -143,8 +142,8 @@ aux informations qui me concernent. Pour cela, je peux accéder aux informations
 </b>
 <br>
 Je peux également, pour des motifs légitimes, m'opposer au traitement des données me concernant.* »<br><br><br>
-Fait à ..........................., le
-<!-- inserer code pour afficher date -->
+Fait le 
+<?php echo $date_decla; ?>
 </div> <!-- main text -->
 <br>
 <div class="visa"><b>
