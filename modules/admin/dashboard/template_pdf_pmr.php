@@ -37,39 +37,40 @@ $date_debut=explode("-",$date_expl[0]);
 }
 
 body {
-font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
 
 .titre{
 	 position:absolute;
 	top:18px;
 	left: 190px;
-font-size: 150%;
-font-weight: 800;
+	font-size: 150%;
+	font-weight: 800;
 
 }
 
 .blackbg{
-	 position:absolute;
+	position:absolute;
 	top:120px;
 	left: 18px;
-text-align:center;
-background-color:black;
-font-weight: 300;
-color:white;
-font-size:150%;
-width:700px;
-padding: 8px;
+	text-align:center;
+	background-color:black;
+	font-weight: 300;
+	color:white;
+	font-size:150%;
+	width:700px;
+	padding: 8px;
 }
 
 .maintext{
 	position:absolute;
+	text-align: justify;
 	top:190px;
 	left: 18px;
 	width:720px;
-font-size:100%;
-padding-top:24px;
-word-wrap: break-word;
+	font-size:100%;
+	padding-top:24px;
+	word-wrap: break-word;
 }
 
   
@@ -77,18 +78,18 @@ word-wrap: break-word;
 	position:absolute;
 	top:940px;
 	left: 400px;
-text-align:center;
-  width: 240px;
-  height: 90px;
-   border:1px dotted black;
-padding:10px;
+	text-align:center;
+	width: 240px;
+	height: 90px;
+	border:1px dotted black;
+	padding:10px;
   } 
   
   .notabene {
 	position:absolute;
 	top:1040px;
 	left: 18px;
-font-size:80%;
+	font-size:80%;
   } 
   
 </style>

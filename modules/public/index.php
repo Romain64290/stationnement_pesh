@@ -223,14 +223,14 @@ input[readonly] {
 				<div class="col-sm-7">
 		  <div class="input-group">
                 <span class="input-group-btn">
-                  <span class="btn btn-primary btn-file">Document 1 &hellip; <input type="file" name="upload1" id="upload1" required>
+                  <span class="btn btn-primary btn-file">Document 1 &hellip; <input type="file" name="upload1" id="upload1" required accept="application/pdf,image/*">
                   </span>
                 </span>
                       <input type="text" class="form-control" readonly>
                   </div><br>
                                      <div class="input-group">
                 <span class="input-group-btn">
-                  <span class="btn btn-primary btn-file">Document 2 &hellip; <input type="file" name="upload2" id="upload2" required>
+                  <span class="btn btn-primary btn-file">Document 2 &hellip; <input type="file" name="upload2" id="upload2" required accept="application/pdf,image/*">
                   </span>
                 </span>
                  <input type="text" class="form-control" readonly>
@@ -272,7 +272,7 @@ input[readonly] {
                 <div class="col-lg-4">
                     <p align="justify" >Afin de pouvoir être identifié comme titulaire de la carte européenne de stationnement, de la carte mobilité inclusion(CMI) ou professionnel de santé  nous vous invitons à déclarer le numéro d'immatriculation de votre véhicule qui sera alors prise en compte dans le système de contrôle pour une période de 2 ans.</p>
                 </div>
-                     <div class="col-lg-8 col-lg-offset-2 text-center">
+                     <div class="col-lg-8 col-lg-offset-2 text-center page-scroll">
                     <a href="#inscrire" class="btn btn-lg btn-outline">
                          S'inscrire
                     </a>
