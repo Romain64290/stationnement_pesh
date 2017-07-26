@@ -2,7 +2,7 @@
 
 /***** Dernière modification : 29/09/2016, Romain TALDU	*****/
 
- class export {
+ class ajout_noemail {
 
     private $con;
 

@@ -37,6 +37,10 @@ $includes = new includes($connect);
              <a href="../dashboard/index.php"><i class="fa fa-dashboard active"></i> <span>Tableau de bord</span></a>
             </li>
             
+              <li <?php if($menu==4){echo "class=\"active\"";}?>>
+            <a href="../ajout_noemail/index.php"><i class="fa fa-user"></i> <span>Ajout usager sans email   </span></a>
+            </li>
+            
                <li <?php if($menu==2){echo "class=\"active\"";}?>>
             <a href="../export/index.php"><i class="fa fa-external-link-square"></i> <span>Export AFS2R</span></a>
             </li>

@@ -39,8 +39,24 @@ $etatExport=$dashboard->etatExport();
     <link rel="stylesheet" href="../../../dist/css/skins/skin-blue.min.css">
      <!-- DataTables -->
     <link rel="stylesheet" href="../../../plugins/datatables/dataTables.bootstrap.css">
+    
+    <link rel="stylesheet" href="../../../plugins/sweetalert2/sweetalert2.min.css">
+    
+        
+      <!-- Jquerry ui pour date picker-->
+  <link rel="stylesheet" href="../../../plugins/jquery-ui-1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="../../../plugins/jQuery/jQuery-2.1.4.min.js"></script>
+  <script src="../../../plugins/jquery-ui-1.11.4/jquery-ui.js"></script>
+        
+       
+    
+  <style>
+ #datepicker {
+  position:static
+}
 
-   
+  </style>
+     
   </head>
  
   <body class="hold-transition skin-blue sidebar-mini" >
@@ -129,9 +145,8 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
             <!-- form start -->
             
               <div class="box-body">
-                  
-          
-           
+                                        
+    
   <table id="liste_demandes" class="table table-bordered table-striped">
                     <thead>
                       <tr>
@@ -168,18 +183,25 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
                  $justificatif1=$key->justificatif1;
                  $justificatif2=$key->justificatif2;
                  
- if($date_validite=="0000-00-00 00:00:00") {$date_validite="";} else{
+if($date_validite=="0000-00-00 00:00:00"){$date_validite="";}else{
    $date_validite= explode(" ", $date_validite);
    $date_validite=$date_validite[0];
    $date_validite= explode("-", $date_validite);
-   $date_validite="$date_validite[2]-$date_validite[1]-$date_validite[0]";
- }      
+$date_validite="$date_validite[2]-$date_validite[1]-$date_validite[0]";}
+    
 		 
 echo "
 <tr>
      <td style=\"width:3%; text-align: left\">$compteur</td>
      <td style=\"width: 20%; text-align: left\">$nom $prenom </td>
-     <td style=\"width: 10%; text-align: center\">$immatriculation </td>
+         
+
+
+     <td style=\"width: 10%; text-align: center\">";
+
+if($etat_dde ==0 OR $etat_dde==1 ){echo $immatriculation;} 
+        
+        echo"</td>
            
  
 <td style=\"width: 15%; text-align: center\">";
@@ -193,44 +215,54 @@ if($etat_dde ==4) {echo "Exportée &nbsp;  <a class=\"btn btn-default btn-xs\" h
 
 echo "</td><td style=\"width: 12%; text-align: center\">";
 
-
-if($etat_dde !=4 AND $etatExport==0) {
+if($etat_dde ==2 OR $etat_dde ==3 OR $etat_dde ==4) {}else{
+    
+ if($etatExport!=1) {
 
 echo"<div class=\"form-group\">                    
  <select class=\"form-control\" onchange=\"onSelectChange($id_decla);\" id=\"select_$id_decla\">
  <option value=\"0\" >- Modifier -</option>";  
 					   
-if($etat_dde !=1) {echo " <option value=\"0\">En cours</option>";}
+if($etat_dde !=1) {echo " <option value=\"1\">En cours</option>";}
 if($etat_dde !=2) {echo "<option value=\"2\">Validée</option>";}
-if($etat_dde !=3) {echo "<option value=\"2\">Refusée</option>";}
+if($etat_dde !=3) {echo "<option value=\"3\">Refusée</option>";}
 
 						
 echo " </select>";
 
 
                   echo " </div>";
-         }      else{ echo"Export en cours...";}         
+         }      else{ echo"Export en cours...";}   
+}
                   echo"</td>";
      
-
+  echo"<td style=\"width: 11%; text-align: center\">";                
+                  
+                  
+if($etat_dde ==0 OR $etat_dde==1 ){
  if($type_decla==1){  
- echo"<td style=\"width: 11%; text-align: center\"><a href=\"genere_pdf_pmr.php?id_decla=$id_decla\" target=\"_blank\"><span class=\"label label-primary\"><i class=\"fa fa-download\"></i> &nbsp; PDF</span></a></td>";}
+ echo"<a href=\"genere_pdf_pmr.php?id_decla=$id_decla\" target=\"_blank\"><span class=\"label label-primary\"><i class=\"fa fa-download\"></i> &nbsp; PDF</span></a>";}
  else{
-  echo"<td style=\"width: 11%; text-align: center\"><a href=\"genere_pdf_pro.php?id_decla=$id_decla\" target=\"_blank\"><span class=\"label label-primary\"><i class=\"fa fa-download\"></i> &nbsp; PDF</span></a></td>";    
+  echo"<a href=\"genere_pdf_pro.php?id_decla=$id_decla\" target=\"_blank\"><span class=\"label label-primary\"><i class=\"fa fa-download\"></i> &nbsp; PDF</span></a>";    
  }
-
+}
  
-     
+ echo"</td>";    
 
 
-echo"
-<td style=\"width:20%; text-align: center\">
+echo"<td style=\"width:20%; text-align: center\">";
 
-| <a href=\"../../public/upload/$dossier/$justificatif1\" target=\"_blank\"> Justif. 1</a> | <a href=\"../../public/upload/$dossier/$justificatif2\" target=\"_blank\"> Justif. 2</a> | 
+if($etat_dde ==0 OR $etat_dde==1 ){
+echo"| <a href=\"../../public/upload/$dossier/$justificatif1\" target=\"_blank\"> Justif. 1</a> | <a href=\"../../public/upload/$dossier/$justificatif2\" target=\"_blank\"> Justif. 2</a> | ";}    
 
 
-</td>
-<td style=\"width:15%; text-align: center\">$date_validite</td></tr>";
+echo"</td>
+<td style=\"width:15%; text-align: center\">$date_validite ";
+ 
+if($etat_dde ==0 OR $etat_dde==1 ){
+echo"<a href=\"#\" onclick=\"modifDate($id_decla);\">Reduire la date</a> ";}
+            
+           echo"</td></tr>";
 
 	$compteur++;		
           
@@ -264,9 +296,9 @@ echo"
  <?php require(__DIR__ .'/../../../include/footer_back.php'); ?>
    
 	
-  	
-<!-- jQuery 2.2.3 -->
-<script src="../../../plugins/jQuery/jquery-2.2.3.min.js"></script>
+      <!-- jQuery 2.1.4 -->
+    <script src="../../../plugins/jQuery/jQuery-2.1.4.min.js"></script>	
+
 <!-- Bootstrap 3.3.6 -->
 <script src="../../../bootstrap/js/bootstrap.min.js"></script>
 <!-- ChartJS 1.0.1 -->
@@ -278,8 +310,21 @@ echo"
 <!-- Datatable -->
 <script src="../../../plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="../../../plugins/datatables/dataTables.bootstrap.min.js"></script>
- 
+
+<script src="../../../plugins/sweetalert2/sweetalert2.min.js"></script>
+
+  <!-- jQuery UI 1.11.4 -->
+    <script src="../../../plugins/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+
+
+
+
+    
    <script>
+       
+
+       
+       
   $('#liste_demandes').DataTable({
       "scrollX": true,
          "stateSave": true,
@@ -303,6 +348,70 @@ echo"
         }
     });
    	
+        
+
+function modifDate(id_decla) {
+        
+ swal({
+  title: 'Etes vous sure de vouloir reduire la date de validité ?',
+  html:"Uniquement si la validité des documents est inférieure à 2 ans ! <br><br><form name=\"formulaire\" id=\"formulaire\" method=\"post\" action=\"modif_date.php\"><div class=\"input-group\"><div class=\"input-group-addon\"><i class=\"fa fa-calendar\"></i></div> <input type=\"text\" id=\"datepicker\" class=\"form-control\" placeholder=\"Date de l'activité\" required name=\"date\"></div><input type=\"hidden\" name=\"id_decla\" value=\""+id_decla+"\"></form>",  
+    type: 'warning',
+  showCancelButton: true,
+  showLoaderOnConfirm: true,
+  allowOutsideClick: false,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Oui, on modifie !',
+  cancelButtonText: 'Annuler !',
+onOpen: function() {
+    	$('#datepicker').datepicker();
+    },
+    preConfirm: function() {
+      return Promise.resolve($('#datepicker').datepicker('getDate'));
+    }
+  }).then(function () {
+ $("#formulaire").submit();
+
+}); 
+
+}
+
+
+
+
+ 
+function refuseDemande(id_decla) {
+        
+ swal({
+  title: 'Etes vous sure de vouloir refuser cette demande?',
+  text:"Vous pouvez preciser le motif du refus ! <br><form name=\"formulaire\" id=\"formulaire\" method=\"post\" action=\"refuse_demande.php\"><textarea name=\"motif\" class=\"swal2-textarea\" style=\"display: block;\">Motif du refus : </textarea><input type=\"hidden\" name=\"id_decla\" value=\""+id_decla+"\"></form>",
+        
+  type: 'warning',
+  showCancelButton: true,
+  showLoaderOnConfirm: true,
+  allowOutsideClick: false,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Oui, on supprime !',
+  cancelButtonText: 'Annuler !'
+}).then(function () {
+ $("#formulaire").submit();
+
+}); 
+
+}
+       
+function onSelectChange($id){
+   
+etat = document.getElementById("select_"+$id).value;
+
+if(etat==1){document.location.href="demande_encours.php?id_decla="+$id;}
+if(etat==2){document.location.href="demande_ok.php?id_decla="+$id;}
+if(etat==3){refuseDemande($id);}
+
+
+}
+ 
    </script>
 
 </body>
