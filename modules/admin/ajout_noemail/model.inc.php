@@ -11,154 +11,78 @@
     }
 
 
-   /***********************************************************************
- * Affiche de l'etat d'exportation
- **************************************************************************/
-  
- function etatExport()
-  {
-  
-  try{
-  		
-		$select = $this->con->prepare('SELECT *
-		FROM export_en_cours
-                WHERE id = 1');
-                
-                $select->execute();
-		
-		$data = $select->fetch();
-		
-		}
-		
-	 catch (PDOException $e){
-       echo $e->getMessage() . " <br><b>Erreur lors l'affichage de l'etat d'export</b>\n";
-	throw $e;
-        exit;
-    }
-	 
- return $data['etat'];
+/**************************************************************************
+ * Insertion des facture dans la base de donnees par une societe
+***************************************************************************/
  
-  } 
-     /***********************************************************************
- * Update exportEnCours (Encours)
- **************************************************************************/
-  
- function exportEnCoursEncours()
+ function save_demande($civilite,$type_decla,$nom,$prenom,$immat,$uniqid,$justificatif1,$justificatif2,$telephone,$adresse,$cp,$ville)
   {
+  
+  	try {
+				
+			
+$insert = $this->con->prepare('INSERT INTO decla_immat (type_decla, civilite,nom,prenom,immatriculation,date_decla,ip_adresse,dossier,justificatif1,justificatif2,telephone,adresse,cp,ville)
+VALUES(:type_decla, :civilite,:nom,:prenom,:immatriculation,:date_decla,:ip_adresse,:dossier,:justificatif1,:justificatif2,:telephone,:adresse,:cp,:ville)');
+ 
+$insert->bindParam(':type_decla', $type_decla, PDO::PARAM_INT);
+$insert->bindParam(':civilite', $civilite, PDO::PARAM_INT);
+$insert->bindParam(':nom', $nom, PDO::PARAM_STR);
+$insert->bindParam(':prenom', $prenom, PDO::PARAM_STR);
+$insert->bindParam(':immatriculation', $immat, PDO::PARAM_STR);
+$insert->bindValue(':date_decla', date('Y-m-d H:i:s'),PDO::PARAM_STR);
+$insert->bindValue(':ip_adresse', $_SERVER['REMOTE_ADDR'],PDO::PARAM_STR);
+$insert->bindParam(':dossier', $uniqid, PDO::PARAM_STR);
+$insert->bindParam(':justificatif1', $justificatif1, PDO::PARAM_STR);
+$insert->bindParam(':justificatif2', $justificatif2, PDO::PARAM_STR);
+$insert->bindParam(':telephone', $telephone, PDO::PARAM_STR);
+$insert->bindParam(':adresse', $adresse, PDO::PARAM_STR);
+$insert->bindParam(':cp', $cp, PDO::PARAM_STR);
+$insert->bindParam(':ville', $ville, PDO::PARAM_STR);
+
+$execute=$insert->execute();		
+
+			} 
+        
+        catch (Exception $e) {
+            echo $e->getMessage() . " <br><b>Erreur lors de l'enregistrement d'une demande</b>\n";
+            throw $e;
+        }   
      
- //modification de la variable en base pour signaler "export en cours"      
-try{	
-$update = $this->con->prepare('UPDATE export_en_cours SET etat = 1  WHERE id = 1'); 
-	    	
-$update->execute();	
-	}
-	
-	 catch (Exception $e) {
-            echo $e->getMessage() . " <br><b>Erreur lors l'update exportEnCours (Encours)</b>\n";
-            throw $e;
-        }		
-
-//calcul date de validité (2ans)
-$date_validite=date('Y-m-d H:i:s',strtotime("+2 years"));
-        
-// Creation des dates de validité      
-try{	
-$update2 = $this->con->prepare('UPDATE decla_immat SET date_validite = :date_validite  WHERE etat_dde = 2 AND date_validite ="0000-00-00 00:00:00" '); 
-
-$update2->bindParam(':date_validite', $date_validite, PDO::PARAM_STR);
-$update2->execute();	
-	}
-	
-        catch (Exception $f) {
-            echo $f->getMessage() . " <br><b>Creation des dates de validité </b>\n";
-            throw $f;
-        }		
-
+     
   }
  
-       /***********************************************************************
- * Update exportEnCours (Abort)
- **************************************************************************/
-  
- function exportEnCoursAbort()
-  {
-try{	
-$update = $this->con->prepare('UPDATE export_en_cours SET etat = 0  WHERE id = 1'); 
-	    	
-$update->execute();	
-	}
-	
-	 catch (Exception $e) {
-            echo $e->getMessage() . " <br><b>Erreur lors l'update exportEnCours (Abort)</b>\n";
-            throw $e;
-        }		
-
-  }
  
-  
-         /***********************************************************************
- * Update exportEnCours (ok)
- **************************************************************************/
-  
- function exportEnCoursOk()
-  {
-try{	
-$update = $this->con->prepare('UPDATE export_en_cours SET etat = 0  WHERE id = 1'); 
-	    	
-$update->execute();	
-	}
-	
-	 catch (Exception $e) {
-            echo $e->getMessage() . " <br><b>Erreur lors l'update exportEnCours (Abort)</b>\n";
-            throw $e;
-        }
-        
-   // update les statuts valide en exporte     
-try{	
-$update2 = $this->con->prepare('UPDATE decla_immat SET etat_dde = 4  WHERE etat_dde = 2 '); 
-
-$update2->execute();	
-	}
-	
-        catch (Exception $f) {
-            echo $f->getMessage() . " <br><b>Erreur lors de la mise a jour de l'etat des demandes validée > exportée </b>\n";
-            throw $f;
-        }		
+ 
+  /********************************
+ * Upload des factures
+*********************************/  
    
-        
-   // envoie mail de confirmation
+ function uploadFractures($file,$destination_factures,$num_document)
+{			
+// Creer le repertoire s'il n'existe pas
+if(!is_dir($destination_factures)){mkdir($destination_factures, 0775, true);}
+     
+$ext = pathinfo($file['name'], PATHINFO_EXTENSION);   
 
-  }
+$maxsize=5485760;
+
+	
+ $destination=$destination_factures.$num_document.".".$ext;  
+     
+    if ( $file['error'] > 0) return FALSE;
+
+  			if ($file['size'] < $maxsize) {
   
-  
-   /***********************************************************************
- * Selectionne les dmeandes validée
- **************************************************************************/
-  
- function selectValide()
-  {
-  
-  try{
-  		
-		$select = $this->con->prepare('SELECT *
-		FROM decla_immat
-                WHERE etat_dde = 2');
-                
-                $select->execute();
-		
-		$data = $select->fetchAll(PDO::FETCH_OBJ);
-		
-		}
-		
-	 catch (PDOException $e){
-       echo $e->getMessage() . " <br><b>Erreur lors la selection des demandes validées</b>\n";
-	throw $e;
-        exit;
-    }
-	 
- return $data;
+     
+		move_uploaded_file($file['tmp_name'], $destination);
+                chmod($destination, 0664);}
  
-  } 
+return $destination;
+
+
+}	
+
+
     }
 
 

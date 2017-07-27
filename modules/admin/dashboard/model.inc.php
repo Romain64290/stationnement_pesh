@@ -188,8 +188,88 @@ $quantite=$result['nbr'];
  
   }
 	
-
+/***********************************************************************
+ * Modification de la date de validite
+ **************************************************************************/
   
+ function modifDate($id_decla,$date)
+        
+         
+  {
+$date=explode("-", $date);
+$date="$date[2]-$date[1]-$date[0]";  
+     
+	try{	
+$update = $this->con->prepare('UPDATE decla_immat SET date_validite = :date  WHERE id_decla = :id_decla'); 
+	    	
+$update->bindParam(':date', $date, PDO::PARAM_STR);
+$update->bindParam(':id_decla', $id_decla, PDO::PARAM_INT);
+$update->execute();	
+	}
+	
+	 catch (Exception $e) {
+            echo $e->getMessage() . " <br><b>Erreur lors de la modification de la date de validité</b>\n";
+            throw $e;
+        }		
+
+  }
+  
+  /***********************************************************************
+ * Changement d'etat 
+ **************************************************************************/
+  
+ function modifEtat($id_decla,$etat)
+        
+         
+  {
+ 
+     
+	try{	
+$update = $this->con->prepare('UPDATE decla_immat SET etat_dde =:etat  WHERE id_decla = :id_decla'); 
+	    	
+$update->bindParam(':id_decla', $id_decla, PDO::PARAM_INT);
+$update->bindParam(':etat', $etat, PDO::PARAM_INT);
+$update->execute();	
+	}
+	
+	 catch (Exception $e) {
+            echo $e->getMessage() . " <br><b>Erreur lors de la modification de l'etat de demande </b>\n";
+            throw $e;
+        }		
+
+  }
+  
+  
+    /***********************************************************************
+ * Retourne le numéro de dossier
+ **************************************************************************/
+  
+ function chercheDossier($id_decla)
+  {
+  
+  try{
+  		
+		$select = $this->con->prepare('SELECT *
+		FROM decla_immat
+                WHERE id_decla = :id_decla');
+                
+                $select->bindParam(':id_decla', $id_decla, PDO::PARAM_INT);
+                $select->execute();
+		
+		$data = $select->fetch();
+		
+		}
+		
+	 catch (PDOException $e){
+       echo $e->getMessage() . " <br><b>Erreur lors dela recherche du nom de dossier</b>\n";
+	throw $e;
+        exit;
+    }
+	 
+ return $data['dossier'];
+ 
+  }
+	
   
     }
 

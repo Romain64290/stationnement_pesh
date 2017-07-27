@@ -106,7 +106,7 @@ exit;
 
 if($_GET['export']=='ok'){$export_en_cours=$export->exportEnCoursOk();}
 
-
+//envoi un email de confirmation aux inscrits
 
  /***********************************************************************
  * Export annulé 

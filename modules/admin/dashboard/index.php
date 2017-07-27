@@ -45,11 +45,8 @@ $etatExport=$dashboard->etatExport();
         
       <!-- Jquerry ui pour date picker-->
   <link rel="stylesheet" href="../../../plugins/jquery-ui-1.11.4/themes/smoothness/jquery-ui.css">
-  <script src="../../../plugins/jQuery/jQuery-2.1.4.min.js"></script>
-  <script src="../../../plugins/jquery-ui-1.11.4/jquery-ui.js"></script>
-        
-       
-    
+  <script src="../../../plugins/jQuery/jQuery-2.1.4.min.js"></script>    
+
   <style>
  #datepicker {
   position:static
@@ -132,7 +129,7 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
         </div>
       </div>
             
-            
+          
 <div class="box box-primary">
             <div class="box-header with-border">
               <h3 class="box-title" >Liste des demandes</h3>
@@ -199,7 +196,7 @@ echo "
 
      <td style=\"width: 10%; text-align: center\">";
 
-if($etat_dde ==0 OR $etat_dde==1 ){echo $immatriculation;} 
+if($etat_dde ==0 OR $etat_dde==1 OR $etat_dde==2 OR $etat_dde==3 OR $etat_dde==4){echo $immatriculation;} 
         
         echo"</td>
            
@@ -257,9 +254,9 @@ echo"| <a href=\"../../public/upload/$dossier/$justificatif1\" target=\"_blank\"
 
 
 echo"</td>
-<td style=\"width:15%; text-align: center\">$date_validite ";
+<td style=\"width:15%; text-align: center\">$date_validite <br> ";
  
-if($etat_dde ==0 OR $etat_dde==1 ){
+if($etat_dde==1 ){
 echo"<a href=\"#\" onclick=\"modifDate($id_decla);\">Reduire la date</a> ";}
             
            echo"</td></tr>";
@@ -275,13 +272,7 @@ echo"<a href=\"#\" onclick=\"modifDate($id_decla);\">Reduire la date</a> ";}
                     </tbody>
                    
                   </table>     
-                
-      
-                
-                
-                
-                     
-        
+       
               </div>
     
                      	 </div> 
@@ -297,7 +288,7 @@ echo"<a href=\"#\" onclick=\"modifDate($id_decla);\">Reduire la date</a> ";}
    
 	
       <!-- jQuery 2.1.4 -->
-    <script src="../../../plugins/jQuery/jQuery-2.1.4.min.js"></script>	
+<script src="../../../plugins/jQuery/jQuery-2.1.4.min.js"></script>	
 
 <!-- Bootstrap 3.3.6 -->
 <script src="../../../bootstrap/js/bootstrap.min.js"></script>
@@ -313,48 +304,17 @@ echo"<a href=\"#\" onclick=\"modifDate($id_decla);\">Reduire la date</a> ";}
 
 <script src="../../../plugins/sweetalert2/sweetalert2.min.js"></script>
 
-  <!-- jQuery UI 1.11.4 -->
-    <script src="../../../plugins/jquery-ui-1.11.4/jquery-ui.min.js"></script>
-
-
-
-
-    
-   <script>
-       
-
-       
-       
-  $('#liste_demandes').DataTable({
-      "scrollX": true,
-         "stateSave": true,
-         "stateDuration": 60 * 3,
-          "ordering": false,
-           "paging":   true,
-           "language": {
-            "lengthMenu": "_MENU_  enregistrements par page",
-            "zeroRecords": "Désolé, aucun résultat trouvé.",
-            "info": "Affichage page _PAGE_ sur _PAGES_",
-            "infoEmpty": "Aucun enregistrement disponible",
-            "infoFiltered": "(filtered from _MAX_ total records)",
-             "search": "Recherche",
-             "paginate": {
-       			 "first":      "First",
-       			 "last":       "Last",
-        		 "next":       "Suivant",
-        		 "previous":   "Précédent"
-  				  },
-         
-        }
-    });
-   	
-        
-
-function modifDate(id_decla) {
+ <script src="../../../plugins/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+ 
+ 
+ <script>
+     
+     
+ function modifDate(id_decla) {
         
  swal({
   title: 'Etes vous sure de vouloir reduire la date de validité ?',
-  html:"Uniquement si la validité des documents est inférieure à 2 ans ! <br><br><form name=\"formulaire\" id=\"formulaire\" method=\"post\" action=\"modif_date.php\"><div class=\"input-group\"><div class=\"input-group-addon\"><i class=\"fa fa-calendar\"></i></div> <input type=\"text\" id=\"datepicker\" class=\"form-control\" placeholder=\"Date de l'activité\" required name=\"date\"></div><input type=\"hidden\" name=\"id_decla\" value=\""+id_decla+"\"></form>",  
+  html:"Uniquement si la validité des documents est inférieure à 2 ans ! <br><br><form name=\"formulaire\" id=\"formulaire\" method=\"post\" action=\"modif_date.php\"><div class=\"input-group\"><div class=\"input-group-addon\"><i class=\"fa fa-calendar\"></i></div> <input type=\"text\" id=\"datepicker\" class=\"form-control\" placeholder=\"Date de l'activité\" required data-error=\"Veuillez choisir une date\" name=\"date\"></div><input type=\"hidden\" name=\"id_decla\" value=\""+id_decla+"\"></form>",  
     type: 'warning',
   showCancelButton: true,
   showLoaderOnConfirm: true,
@@ -364,7 +324,21 @@ function modifDate(id_decla) {
   confirmButtonText: 'Oui, on modifie !',
   cancelButtonText: 'Annuler !',
 onOpen: function() {
-    	$('#datepicker').datepicker();
+    	$( "#datepicker" ).datepicker({
+altField: "#datepicker",
+closeText: 'Fermer',
+prevText: 'Précédent',
+nextText: 'Suivant',
+currentText: 'Aujourd\'hui',
+monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+weekHeader: 'Sem.',
+dateFormat: 'dd-mm-yy',
+firstDay : 1
+});
     },
     preConfirm: function() {
       return Promise.resolve($('#datepicker').datepicker('getDate'));
@@ -375,8 +349,6 @@ onOpen: function() {
 }); 
 
 }
-
-
 
 
  
@@ -411,8 +383,10 @@ if(etat==3){refuseDemande($id);}
 
 
 }
+   
  
-   </script>
-
+    </script>
+ 
+   
 </body>
 </html>

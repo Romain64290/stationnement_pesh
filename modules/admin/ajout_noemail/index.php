@@ -13,7 +13,13 @@ require(__DIR__ .'/model.inc.php');
 $connect = new connection();
 $ajout_noemail = new ajout_noemail($connect);
 
+// verifie si la variable $valide existe => demande effectuée
+$valide = isset($_GET['valide']) ? $_GET['valide'] : NULL;
 
+// les session permettent de garder en memoire la saisie en cas de demande rejet pour mauvaise plaque d'immatriculation
+
+if(!isset($_SESSION['civilite'])){$_SESSION['civilite']=1;}
+if(!isset($_SESSION['type_decla'])){$_SESSION['type_decla']=1;}
 
 ?>
 
@@ -39,13 +45,42 @@ $ajout_noemail = new ajout_noemail($connect);
     <link rel="stylesheet" href="../../../dist/css/skins/skin-blue.min.css">
      <!-- DataTables -->
     <link rel="stylesheet" href="../../../plugins/datatables/dataTables.bootstrap.css">
-
-   
+    
+     <link rel="stylesheet" href="../../../plugins/sweetalert2/sweetalert2.min.css">
+    
+    
+    
+ <style>
+     
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  background: red;
+  cursor: inherit;
+  display: block;
+}
+input[readonly] {
+  background-color: white !important;
+  cursor: text !important;
+}
+</style>    
+        
+  
   </head>
  
-  <body class="hold-transition skin-blue sidebar-mini" >
-  	
-  	
+  <body class="hold-transition skin-blue sidebar-mini" <?php if($valide=="ok"){echo"onload=\"Valide_ok();\"";}  if($valide=="no"){echo"onload=\"Valide_no();\"";} if($valide=="upload"){echo"onload=\"Valide_upload();\"";} ?>> 	
+
   	
     	
 <?php
@@ -77,8 +112,9 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
         	
      
  <div class="box box-primary">
-      <form name="inscriptionForm"  id="inscriptionForm" role="form" data-toggle="validator" action="validation_ajout_newuser.php" method="post" data-disable="false">
-              <div class="box-body">
+      <form name="formulaire" role="form" data-toggle="validator" action="upload.php" method="post" enctype="multipart/form-data">
+ 
+          <div class="box-body">
            
            
             <div class="row">
@@ -93,8 +129,8 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
  	 </span>
            	 <select name="civilite" class="form-control" required  data-error="Veuillez choisir votre civilité">
                 <option value="" selected disabled="disabled">Civilité</option>
-                <option value="1">Monsieur</option>
-                <option value="2">Madame</option>
+                <option value="1" <?php if($_SESSION['civilite']==1)  {echo "checked";} ?>>Monsieur</option>
+                <option value="2"<?php if($_SESSION['civilite']==2)  {echo "checked";} ?>>Madame</option>
             </select>            
             
           </div> <div class="help-block with-errors"></div></div></div>
@@ -105,7 +141,7 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
     <span class="input-group-addon">
     <span class="glyphicon glyphicon-user"></span>
  	 </span>
-     <input type="text" class="form-control" placeholder="Nom" required name="nom" data-error="Veuillez saisir votre nom"> </div>  
+     <input type="text" class="form-control" placeholder="Nom" required name="nom" data-error="Veuillez saisir votre nom" value="<?php if(isset($_SESSION['nom']))  {echo $_SESSION['nom'];} ?>"> </div>  
      <div class="help-block with-errors"></div>
   
      </div> </div>     
@@ -116,18 +152,55 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
     <span class="input-group-addon">
     <span class="glyphicon glyphicon-user"></span>
  	 </span>
-     <input type="text" class="form-control" placeholder="Prénom" required name="prenom" data-error="Veuillez saisir votre prénom"> </div>  
+     <input type="text" class="form-control" placeholder="Prénom" required name="prenom" data-error="Veuillez saisir votre prénom" value="<?php if(isset($_SESSION['prenom']))  {echo $_SESSION['prenom'];} ?>"> </div>  
      <div class="help-block with-errors"></div>
    
      </div> </div>        
                
 			 </div>	
+                  
+                            <div class="row">
+            
+             <div class="col-md-3">
+           
+             	
+                <div class="form-group has-feedback">
+              <div class="input-group">
+    <span class="input-group-addon">
+    <span class="fa fa-user"></span>
+ 	 </span>
+           	 <select name="type_decla" class="form-control" required  data-error="Veuillez choisir le type de demande">
+                <option value="" selected disabled="disabled">Type d'usager</option>
+                <option value="1" <?php if($_SESSION['type_decla']==1)  {echo "checked";} ?>>PMR</option>
+                <option value="2" <?php if($_SESSION['type_decla']==2)  {echo "checked";} ?>>PRO</option>
+            </select>                      
+            
+          </div> <div class="help-block with-errors"></div></div></div>
+              	
+              	 <div class="col-md-9">
+                     
+                                 
+  <div class="form-group has-feedback">
+                  <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-car"></i>
+                  </div>
+                  <input class="form-control" type="text"  placeholder="Plaque d'immatriculation" required name="immatriculation" data-error="Veuillez saisir une plaque d'immatriculation" value="<?php if(isset($_SESSION['immatriculation']))  {echo $_SESSION['immatriculation'];} ?>"> </div>
+                   <div class="help-block with-errors"></div>
+</div>
+         </div>     
+          
+                
+               
+			 </div>	
+                  
+                  
     <div class="form-group has-feedback">
  	 <div class="input-group">
     <span class="input-group-addon">
     <span class="glyphicon glyphicon-phone"></span>
  	 </span>
-     <input type="text" class="form-control" placeholder="Téléphone" required name="telephone" data-error="Veuillez saisir votre numéro de téléphone"></div>  
+     <input type="text" class="form-control" placeholder="Téléphone" required name="telephone" data-error="Veuillez saisir votre numéro de téléphone" value="<?php if(isset($_SESSION['telephone']))  {echo $_SESSION['telephone'];} ?>"></div>  
      <div class="help-block with-errors"></div>
    
      </div>         
@@ -142,7 +215,7 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
     <span class="input-group-addon">
     <span class="glyphicon glyphicon-home"></span>
  	 </span>
-   <input type="text" class="form-control" placeholder="Adresse" required name="adresse" data-error="Veuillez saisir votre adresse postale"> 
+   <input type="text" class="form-control" placeholder="Adresse" required name="adresse" data-error="Veuillez saisir votre adresse postale" value="<?php if(isset($_SESSION['adresse']))  {echo $_SESSION['adresse'];} ?>"> 
    
      </div>
      
@@ -165,7 +238,7 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
     <span class="input-group-addon">
     <span class="glyphicon glyphicon-home"></span>
  	 </span>
-           	<input type="text" class="form-control" placeholder="Code postal" required name="cp" data-error="Veuillez saisir un code postal">            
+           	<input type="text" class="form-control" placeholder="Code postal" required name="cp" data-error="Veuillez saisir un code postal" value="<?php if(isset($_SESSION['cp']))  {echo $_SESSION['cp'];} ?>">            
             
           </div> <div class="help-block with-errors"></div></div></div>
               	
@@ -175,7 +248,7 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
     <span class="input-group-addon">
     <span class="glyphicon glyphicon-home"></span>
  	 </span>
-     <input type="text" class="form-control" placeholder="Ville" required name="ville" data-error="Veuillez saisir une commune"> </div>  
+     <input type="text" class="form-control" placeholder="Ville" required name="ville" data-error="Veuillez saisir une commune" value="<?php if(isset($_SESSION['ville']))  {echo $_SESSION['ville'];} ?>"> </div>  
      <div class="help-block with-errors"></div>
   
      </div> </div>     
@@ -184,23 +257,50 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
                
 			 </div>	
          
-            
-  <div class="form-group has-feedback">
-                  <div class="input-group">
-                  <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                  <input class="form-control" type="text" pattern="^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$" placeholder="Date de naissance : DD/MM/YYYY" required name="naissance" data-error="Veuillez saisir votre date de naissance"> </div>
-                   <div class="help-block with-errors"></div>
-</div>
 
+               
+    
+                  
+                  
+                            <div class="row">
+            
+             <div class="col-md-6">
+           
+             	
+                <div class="form-group has-feedback">
+                     <div class="input-group">
+              <span class="input-group-btn">
+                  <span class="btn btn-default btn-file">Carte grise &hellip; <input type="file" name="upload1" id="upload1" required accept="application/pdf,image/*">
+                  </span>
+                </span>
+                      <input type="text" class="form-control" readonly placeholder="5 Mo max par fichier"></div></div>
+                      
+         <div class="alert alert-block alert-danger" id="upload_div" style="display:none">
+      <strong>Attention !</strong>  Vous devez transmettre des documents ! 
+       </div>    
+             
+             </div>
+              	
+ <div class="col-md-6">
+           
+                        <div class="form-group has-feedback">
+                     <div class="input-group">
+              <span class="input-group-btn">
+                  <span class="btn btn-default btn-file">Justificatif &hellip; <input type="file" name="upload2" id="upload2" required accept="application/pdf,image/*">
+                  </span>
+                </span>
+                      <input type="text" class="form-control" readonly placeholder="5 Mo max par fichier"></div></div>
+                      
   
+ 
+ </div>           	
+	              
                 
              </div>
               <!-- /.box-body -->
               <!-- /.box-body -->
               <div class="box-footer">
-              	 <button type="button" class="btn btn-default" onclick="window.location.href='../dashboard/index.php'"><i class="fa fa-arrow-circle-left"></i> Annuler</button>  
+              	 <button type="reset" class="btn btn-default" ><i class="fa fa-arrow-circle-left"></i> Annuler</button>  
                 <button type="submit" class="btn btn-primary" ><i class="fa fa-floppy-o"></i> &nbsp; Créer l'utilisateur</button>
               </div>
             </form>
@@ -231,30 +331,91 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
 <!-- Datatable -->
 <script src="../../../plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="../../../plugins/datatables/dataTables.bootstrap.min.js"></script>
+
+ <script src="../../../plugins/sweetalert2/sweetalert2.min.js"></script>
+    
+     
+ <script src="../../../include/js/validator.js"></script>
+	
+
  
    <script>
-  $('#liste_usagers').DataTable({
-         "stateSave": true,
-         "stateDuration": 60 * 3,
-          "ordering": false,
-           "paging":   true,
-           "language": {
-            "lengthMenu": "_MENU_  enregistrements par page",
-            "zeroRecords": "Désolé, aucun résultat trouvé.",
-            "info": "Affichage page _PAGE_ sur _PAGES_",
-            "infoEmpty": "Aucun enregistrement disponible",
-            "infoFiltered": "(filtered from _MAX_ total records)",
-             "search": "Recherche",
-             "paginate": {
-       			 "first":      "First",
-       			 "last":       "Last",
-        		 "next":       "Suivant",
-        		 "previous":   "Précédent"
-  				  },
-         
+
+   $("form").on("submit", function() {
+
+$erreur="no";
+
+      if($('#upload1').val()<1 && $('#upload2').val()<1) {
+      	
+		
+        $("div.form-group").addClass("has-error");
+
+        $("#upload_div").show("slow").delay(6000).hide("slow");
+        
+         $erreur="ok";}
+
+ 					 });
+
+
+
+   $(document).on('change', '.btn-file :file', function() {
+  var input = $(this),
+      numFiles = input.get(0).files ? input.get(0).files.length : 1,
+      label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+  input.trigger('fileselect', [numFiles, label]);
+});
+
+$(document).ready( function() {
+    $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
+        
+        var input = $(this).parents('.input-group').find(':text'),
+            log = numFiles > 1 ? numFiles + ' files selected' : label;
+        
+        if( input.length ) {
+            input.val(log);
+        } else {
+            if( log ) alert(log);
         }
+        
     });
-   	
+});     
+        
+ 
+function Valide_ok() {
+  	  
+  swal({
+  title: 'Demande d\'inscription enregistrée !',
+  text: "Vous serez informé(e) email du traitement de votre demande.",
+  type: 'success',
+
+})
+    
+ }  
+ 
+ function Valide_upload() {
+  	  
+  swal({
+  title: 'Demande d\'inscription refusée !',
+  text: "Un problème est survenu dans le transfert de fichiers.",
+  type: 'error',
+
+})
+    
+ }
+ 
+
+
+function Valide_no() {
+  	  
+  swal({
+  title: 'Demande d\'inscription refusée !',
+  text: "La plaque d'immatriculation saisie n'est pas conforme.",
+  type: 'error',
+
+})
+    
+ }        
+        
    </script>
 
 </body>

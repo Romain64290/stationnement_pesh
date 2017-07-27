@@ -113,7 +113,7 @@ Professionnels de santé
  ?>
 </b>
 <br><br><b>déclare</b><br>
-- être titulaire d'un caducée médical en cours de validité (date de fin de validité . . / . . / . . . . ), pour lequel je joins un justificatif (attestation d'inscription à l'ordre des médecins/infirmiers, attestation d'employeur, etc.) au présent dossier,
+- être titulaire d'un caducée médical en cours de validité, pour lequel je joins un justificatif (attestation d'inscription à l'ordre des médecins/infirmiers, attestation d'employeur, etc.) au présent dossier,
 <br><br>
 - utiliser le véhicule immatriculé <b>
 <?php echo htmlspecialchars($aficheInscrit['immatriculation']); ?>

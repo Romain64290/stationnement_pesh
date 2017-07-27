@@ -13,13 +13,13 @@ $connect = new connection();
 $dashboard = new dashboard($connect);
 
 //modification de l'etat
-$dashboard->modifEtat($_POST['id_decla'],3);
+$dashboard->modifEtat($_GET['id_decla'],2);
 
 //suppression de la plaque d'immatriculation
 //$dashboard->immatRefuse($_POST['id_decla'],$_POST['motif']);
 
 //recherche du nom de dossier pour suppression
-$dossier=$dashboard->chercheDossier($_POST['id_decla']);
+$dossier=$dashboard->chercheDossier($_GET['id_decla']);
 
 $dir=CHEMIN_UPLOAD.$dossier;
 //suppression des justificatifs
@@ -39,10 +39,6 @@ rrmdir($dir);
  }
 
 
-
-
-//envoie email refus
-//$dashboard->mailRefuse($_POST['id_decla'],$_POST['motif']);
 
 
 Header("Location:index.php");
