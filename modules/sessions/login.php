@@ -18,7 +18,7 @@ if($ldapconn) {
     // verify binding
     if ($ldapbind) {
                
-        $result = ldap_search($ldapconn,LDAPTREE,'(&(cn=tal*)('.FILTERSUPERADMIN.'))') or die ("Error in search query: ".ldap_error($ldapconn));
+        $result = ldap_search($ldapconn,LDAPTREE,'(&(samaccountname='.$_POST['login'].')('.FILTERSUPERADMIN.'))') or die ("Error in search query: ".ldap_error($ldapconn));
         $data = ldap_get_entries($ldapconn, $result); }
         
         // erreur identification
