@@ -33,7 +33,7 @@
   setlocale(LC_ALL, 'fr_FR.UTF-8');
   
   // Adresse du site
-  define('URL_SITE', 'http://stationnement.sdin');
+  define('URL_SITE', 'http://stationnement.local');
   
   
   //balise <title>
@@ -44,4 +44,14 @@
   
    // MAX-SIZE-UPLOAD
   define('MAX-SIZE-UPLOAD', '1000000000');
+  
+  
+  //LDAP
+   define("LDAPSERVEUR", "192.168.1.218");
+   define("LDAPTREE", "dc=LOCAL,dc=AGGLO-PAU,dc=FR");
+   define("FILTERSUPERADMIN", "memberof=CN=GE-DN-DevNumerique,OU=Entités,OU=Groupes,OU=CAPBP,DC=local,DC=agglo-pau,DC=fr");
+  
+//$ldapuser = 'LOCAL\svc-adsync';
+//$ldappass = 'hinUCeWVCuCyCP08TdcH';
+
   

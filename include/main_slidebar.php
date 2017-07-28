@@ -19,7 +19,7 @@ $includes = new includes($connect);
           <!-- Sidebar user panel (optional) -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="../../../dist/img/avatar7.png" class="img-circle" alt="User Image">
+              <?php echo $_SESSION['photo_membre']." class=\"img-circle\" alt=\"User Image\">";?>
             </div>
             <div class="pull-left info">
               <p><?php echo $_SESSION['prenom_membre'];?>  <?php echo $_SESSION['nom_membre']; ?></p>

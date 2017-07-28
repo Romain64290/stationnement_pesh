@@ -55,8 +55,8 @@ $erreur = isset($_GET['erreur']) ? $_GET['erreur'] : NULL;
         <p class="login-box-msg">Connectez-vous à votre espace personnel.</p>
         <form action="../modules/sessions/login.php" method="post">
           <div class="form-group has-feedback">
-            <input type="text" class="form-control" placeholder="Email" name="login" required>
-            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            <input type="text" class="form-control" placeholder="Identifiant Windows" name="login" required>
+            <span class="fa fa-windows form-control-feedback"></span>
           </div>
           <div class="form-group has-feedback">
             <input type="password" class="form-control" placeholder="Mot de passe" name="password" required>
@@ -72,8 +72,8 @@ $erreur = isset($_GET['erreur']) ? $_GET['erreur'] : NULL;
           </div>
         </form>
         <p>
-        <a href="../modules/sessions/forget_pwd.php">J'ai oublié mon mot de passe</a><br>
-        <a href="../modules/sessions/register.php" class="text-center">Je souhaite m'inscrire</a><br>
+       <!--  <a href="../modules/sessions/forget_pwd.php">J'ai oublié mon mot de passe</a><br>
+       <a href="../modules/sessions/register.php" class="text-center">Je souhaite m'inscrire</a><br> -->
         </p>
 	<p class="text-danger"><?php if($erreur==1){echo"Nom d'utilisateur ou mot de passe incorrect !";} ?></p>
       </div><!-- /.login-box-body -->
