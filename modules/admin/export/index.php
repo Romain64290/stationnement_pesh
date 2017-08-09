@@ -114,10 +114,13 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
                       
               <button type="button" class="btn btn-success" 
                   <?php  if($etatExport==0){echo "disabled=`\"true\"";} ?>
-                      onclick="location.href='export.php?export=ok';">Valider l'export</button>   <br><br><br>
+                      onclick="location.href='export.php?export=ok';">Valider l'export</button>   <br><br>
                 
                 
       
+
+  <strong>Attention!</strong> Si vous avez réalisé l'etape 1, mais que le bouton "valider l'export" reste désactivé, veuillez réactualiser la page.
+<br>
         
               </div>
     

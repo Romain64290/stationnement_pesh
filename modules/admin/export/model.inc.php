@@ -60,6 +60,8 @@ $update->execute();
 
 //calcul date de validité (2ans)
 $date_validite=date('Y-m-d H:i:s',strtotime("+2 years"));
+
+
         
 // Creation des dates de validité      
 try{	
@@ -142,7 +144,7 @@ $update2->execute();
   		
 		$select = $this->con->prepare('SELECT *
 		FROM decla_immat
-                WHERE etat_dde = 2');
+                WHERE etat_dde = 2 OR  etat_dde = 4');
                 
                 $select->execute();
 		

@@ -17,143 +17,42 @@ class administrateurs {
   
  function afficheAdmin()
   {
-  	
- 
+  	 
  // recherche des administrateurs
- 
-	try{
-$select =$this->con->prepare('SELECT *
-						FROM membres
-						WHERE id_typemembre =3 OR id_typemembre =4
-						ORDER BY validation_inscription ASC, nom_membre ASC
-						');
-							
-$select->execute();
+ $ldapconn = ldap_connect(LDAPSERVEUR) or die("Could not connect to LDAP server.");
 
-$data = $select->fetchAll(PDO::FETCH_OBJ);	
-} 
+// a creuser......
+ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
+ldap_set_option($ldapconn, LDAP_OPT_REFERRALS, 0);
+
+if($ldapconn) {
+    // binding to ldap server
+    $ldapbind = ldap_bind($ldapconn,LDAPUSER,LDAPPASS);
+    // verify binding
+    if ($ldapbind) {
+               
+        $result = ldap_search($ldapconn,LDAPTREE,FILTERSUPERADMIN) or die ("Error in search query: ".ldap_error($ldapconn));
+        $data = ldap_get_entries($ldapconn, $result); }
         
-        catch (Exception $e) {
-            echo $e->getMessage() . " <br><b>Erreur de la recherche des Administrateurs</b>\n";
-            throw $e;
-        }	 
+        // erreur identification
+       // else{ header ('location: ../../admin/index.php?erreur=1');exit;}
+        
+        //trie du tableau
+      usort($data, array($this, 'comparer'));
+
+        
+        // fonction qui compare les valeurs post_name l'une à l'autre
+       
+}
       
 return $data;
 
- }
 
-
-/***********************************************************************
- * Modification de l'etat des membres (valide ou refuser)
- **************************************************************************/
   
- function changeEtat($id_membre,$etat)
-  {
-	try{	
-$update = $this->con->prepare('UPDATE membres SET validation_inscription = :etat  WHERE id_membre = :id_membre'); 
-	    	
-$update->bindParam(':etat', $etat, PDO::PARAM_INT);
-$update->bindParam(':id_membre', $id_membre, PDO::PARAM_INT);
-$update->execute();	
-	}
-	
-	 catch (Exception $e) {
-            echo $e->getMessage() . " <br><b>Erreur lors de la modification de l'etat d'un membre</b>\n";
-            throw $e;
-        }		
+}
 
-  }
-
-/***********************************************************************
- * Reuperer Email Participant
- **************************************************************************/
-  
- function recupMailUser($id_membre)
-  {
-  	
-		
-	try{
-$select = $this->con->prepare('SELECT * FROM membres
-		WHERE id_membre = :id_membre');
-		
-$select->bindParam(':id_membre', $id_membre, PDO::PARAM_INT);
-$select->execute();	
+function comparer($a, $b) {
+       return strcmp($a["sn"][0], $b["sn"][0]);
 	}
-	
-	 catch (Exception $e) {
-            echo $e->getMessage() . " <br><b>Erreur lors de la recupération de l'email d'un utilisateur</b>\n";
-            throw $e;
-        }	
-		
-	 
-       if ($result = $select->fetch()) {
         
-           $select->closeCursor();
-		   
-		  $recup_email=$result['email'];
-		   
-	
-}
-	   
- 
-return  $recup_email; 	   
-	}
-		
-
-
-
-/***********************************************************************
- * Envoi Email administrateur validé
- **************************************************************************/
-  
- function envoiMailValidation($mail_user)
-  {
-  
-	
-// Création d'un nouvel objet $mail
-$mail = new PHPMailer();
-// Encodage
-$mail->CharSet = 'UTF-8';
-$mail->Encoding = 'base64';
-
-//=====Corps du message
-$body = "<html><head></head>
-<body>
-Bonjour,<br>
-<br>
-Nous vous confirmons votre inscription à l'espace d'administration du système de contrôle automatisé de stationnement<br>
-Vous pouvez désormais vous connecter avec votre adresse email et le mot de passe choisi<br><br>
-Cordialement
-</body>
-</html>";
-//==========
-
-
-// Expediteur, adresse de retour et destinataire :
-$mail->SetFrom(FROM_EMAIL, "Ville de Pau"); //L'expediteur du mail
-$mail->AddReplyTo("NO-REPLY@agglo-pau.fr", "NO REPLY"); //Pour que l'usager réponde au mail
-
- //mail du destinataire
-$mail->AddAddress($mail_user); 
-
-
-// Sujet du mail
-$mail->Subject = "Ville de Pau - Système de contrôle automatisé de stationnement";
-// Le message
-$mail->MsgHTML($body);
-
-// Envoi de l'email
-$mail->Send();
-
-unset($mail);
-	
-}
-  
-  
-  
-  
-  
-  
-  
-}
-			
+        }

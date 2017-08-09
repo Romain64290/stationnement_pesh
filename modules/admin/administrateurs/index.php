@@ -88,7 +88,7 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
   </div><!-- /.box-header -->
   <div class="box-body">
    
-   
+         
    
       <!-- Affichage de la liste des administrateurs  --> 
   <table id="liste_admin" class="table table-bordered table-striped">
@@ -99,8 +99,7 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
                         <th>Prénom</th>
                         <th>Email</th>
                         <th>Etat</th>
-                         <th>Modif. état</th>
-                      </tr>
+                        </tr>
                     </thead>
                     <tbody>
                   
@@ -109,53 +108,33 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
  /* Affichage de la liste des administrateurs */
              
  $afficheAdmin=$administrateurs->afficheAdmin(); 
- 
+  
  $compteur = 1;
 
 	 foreach($afficheAdmin as $key){
 			
-		 $id_membre=$key->id_membre;
-		 $id_typemembre=$key->id_typemembre;
-		 $nom_membre=htmlspecialchars($key->nom_membre);
-		 $prenom_membre=htmlspecialchars($key->prenom_membre);
-		 $email=htmlspecialchars($key->email);
-		 $validation_inscription=$key->validation_inscription;
+		 $id_membre=$key['samaccountname'][0];
+		 $id_typemembre=4;
+		 $nom_membre=htmlspecialchars($key["sn"][0]);
+		 $prenom_membre=htmlspecialchars($key["givenname"][0]);
+		 $email=htmlspecialchars($key["mail"][0]);
 		 
 echo "
 <tr>
-            <td style=\"width:10%; text-align: left\">$compteur</td>
-            <td style=\"width: 22%; text-align: left\">$nom_membre</td>
-            <td style=\"width: 19%; text-align: left\">$prenom_membre</td>
-            <td style=\"width: 27%; text-align: left\">$email</td>";
+            <td style=\"width:3%; text-align: left\">$compteur</td>
+            <td style=\"width: 27%; text-align: left\">$nom_membre</td>
+            <td style=\"width: 24%; text-align: left\">$prenom_membre</td>
+            <td style=\"width: 21%; text-align: left\">$email</td>";
 	 
-echo "<td style=\"width: 22%; text-align: left\">";
+echo "<td style=\"width: 25%; text-align: left\">";
 	 
 if($id_typemembre ==1) {echo "Utilisateur &emsp; ";}
 if($id_typemembre ==2) {echo "Rédacteur &emsp; ";}
 if($id_typemembre ==3) {echo "Administrateur &emsp;&emsp; &emsp; &emsp;  ";}
 if($id_typemembre ==4) {echo "Super-Administrateur &emsp; ";}
-	 
-	 
-if($validation_inscription ==2) {echo "	 <a class=\"btn btn-danger btn-xs\" href=\"#\"><i class=\"fa fa-times fa-lg \"></i></a>";}
-if($validation_inscription ==0) {echo "	 <a class=\"btn btn-warning btn-xs\" href=\"#\"><i class=\"fa fa-question fa-lg\"></i></a>";}
-if($validation_inscription ==1) {echo "	 <a class=\"btn btn-success btn-xs\" href=\"#\"><i class=\"fa fa-check fa-lg\"></i></a>";}
-
-echo "</td><td style=\"width: 11%; text-align: left\">
-<div class=\"form-group\">";
-                      
-if($id_typemembre !=4){
-                      
-                    echo " <select class=\"form-control\" onchange=\"onSelectChange($id_membre);\" id=\"select_$id_membre\">
-                      <option value=\"0\" >- Modifier -</option>";  
-					   
-if($validation_inscription !=1) {echo "<option value=\"1\">Valider</option>";}
-if($validation_inscription !=0) {echo " <option value=\"0\">En attente</option>";}
-if($validation_inscription !=2) {echo "<option value=\"2\">Refuser</option>";}
-						
-echo " </select>";}
 
 
-                  echo " </div></td>";
+echo "</td></tr>";
      
 
 
@@ -170,6 +149,11 @@ echo " </select>";}
                     </tbody>
                    
                   </table>
+
+      <br><p class="bg-info">
+          <strong><u>Modification de la liste des administrateurs</u></strong> <BR>
+          Envoyez un email au Centre de Services : <a href="mailto:dn.centredeservices@agglo-pau.fr">dn.centredeservices@agglo-pau.fr</a> en precisant le nom de la personne à ajouter/ supprimer du groupe de l'Active Directory suivant: <kbd><?php echo FILTERSUPERADMIN ?></kbd><BR>Le tableau  ci-dessus sera mis à jour automatiquement dès que la demande sera prise en compte.</p>   
+       <br>   <br>
 
 
 

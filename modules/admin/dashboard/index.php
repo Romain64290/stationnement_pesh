@@ -38,7 +38,7 @@ $etatExport=$dashboard->etatExport();
    
     <link rel="stylesheet" href="../../../dist/css/skins/skin-blue.min.css">
      <!-- DataTables -->
-    <link rel="stylesheet" href="../../../plugins/datatables/dataTables.bootstrap.css">
+     <link rel="stylesheet" href="../../../plugins/datatables/media/css/dataTables.bootstrap.min.css">
     
     <link rel="stylesheet" href="../../../plugins/sweetalert2/sweetalert2.min.css">
     
@@ -149,6 +149,7 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
                       <tr>
                       	<th style=" text-align: center">#</th>
                         <th>Nom /Prenom</th>
+                        <th style=" text-align: center">Profil</th>
                          <th style=" text-align: center">Immatriculation</th>
                         <th style=" text-align: center">Etat demande</th>
                         <th style=" text-align: center">Modif. Etat</th>
@@ -180,6 +181,14 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
                  $justificatif1=$key->justificatif1;
                  $justificatif2=$key->justificatif2;
                  
+              
+                 
+if($type_decla ==1) {$type_decla_lg="PMR";} 
+if($type_decla ==2) {$type_decla_lg="Pro de sante";}   
+if($type_decla ==3) {$type_decla_lg="Serv. Polices";}   
+if($type_decla ==4) {$type_decla_lg="Pool Agglo";}   
+if($type_decla ==5) {$type_decla_lg="CCAS Pro";}   
+                 
 if($date_validite=="0000-00-00 00:00:00"){$date_validite="";}else{
    $date_validite= explode(" ", $date_validite);
    $date_validite=$date_validite[0];
@@ -190,9 +199,9 @@ $date_validite="$date_validite[2]-$date_validite[1]-$date_validite[0]";}
 echo "
 <tr>
      <td style=\"width:3%; text-align: left\">$compteur</td>
-     <td style=\"width: 20%; text-align: left\">$nom $prenom </td>
+     <td style=\"width: 15%; text-align: left\">$nom $prenom </td>
          
-
+    <td style=\"width: 15%; text-align: left\">$type_decla_lg</td>
 
      <td style=\"width: 10%; text-align: center\">";
 
@@ -201,18 +210,19 @@ if($etat_dde ==0 OR $etat_dde==1 OR $etat_dde==2 OR $etat_dde==3 OR $etat_dde==4
         echo"</td>
            
  
-<td style=\"width: 15%; text-align: center\">";
+<td style=\"width: 13%; text-align: center\">";
 
 if($etat_dde ==0) {echo "Nouvelle &nbsp; <a class=\"btn btn-info btn-xs\" href=\"#\"><i class=\"fa fa-question fa-lg\"></i></a>";}
 if($etat_dde ==1) {echo "En cours &nbsp; <a class=\"btn btn-warning btn-xs\" href=\"#\"><i class=\"fa fa-question fa-lg\"></i></a>";}
 if($etat_dde ==2) {echo "Validée &nbsp;  <a class=\"btn btn-success btn-xs\" href=\"#\"><i class=\"fa fa-check fa-lg\"></i></a>";}
 if($etat_dde ==3) {echo "Refusée &nbsp; <a class=\"btn btn-danger btn-xs\" href=\"#\"><i class=\"fa fa-times fa-lg \"></i></a>";}
 if($etat_dde ==4) {echo "Exportée &nbsp;  <a class=\"btn btn-default btn-xs\" href=\"#\"><i class=\"fa fa-check fa-lg\"></i></a>";}
+if($etat_dde ==5) {echo "Périmée &nbsp;  <a class=\"btn btn-link btn-xs\" href=\"#\"><i class=\"fa fa-times fa-lg\"></i></a>";}
 
 
 echo "</td><td style=\"width: 12%; text-align: center\">";
 
-if($etat_dde ==2 OR $etat_dde ==3 OR $etat_dde ==4) {}else{
+if($etat_dde ==2 OR $etat_dde ==3 OR $etat_dde ==5) {}else{
     
  if($etatExport!=1) {
 
@@ -220,9 +230,10 @@ echo"<div class=\"form-group\">
  <select class=\"form-control\" onchange=\"onSelectChange($id_decla);\" id=\"select_$id_decla\">
  <option value=\"0\" >- Modifier -</option>";  
 					   
-if($etat_dde !=1) {echo " <option value=\"1\">En cours</option>";}
-if($etat_dde !=2) {echo "<option value=\"2\">Validée</option>";}
-if($etat_dde !=3) {echo "<option value=\"3\">Refusée</option>";}
+if($etat_dde !=1 AND $etat_dde !=4) {echo " <option value=\"1\">En cours</option>";}
+if($etat_dde !=2 AND $etat_dde !=4) {echo "<option value=\"2\">Validée</option>";}
+if($etat_dde !=3 AND $etat_dde !=4) {echo "<option value=\"3\">Refusée</option>";}
+if($etat_dde ==4) {echo "<option value=\"5\">Suspendre</option>";}
 
 						
 echo " </select>";
@@ -233,24 +244,26 @@ echo " </select>";
 }
                   echo"</td>";
      
-  echo"<td style=\"width: 11%; text-align: center\">";                
+  echo"<td style=\"width: 8%; text-align: center\">";                
                   
-                  
+  if($type_decla !=3 AND $type_decla !=4 AND $type_decla !=5 )    {    
+      
 if($etat_dde ==0 OR $etat_dde==1 ){
  if($type_decla==1){  
  echo"<a href=\"genere_pdf_pmr.php?id_decla=$id_decla\" target=\"_blank\"><span class=\"label label-primary\"><i class=\"fa fa-download\"></i> &nbsp; PDF</span></a>";}
  else{
   echo"<a href=\"genere_pdf_pro.php?id_decla=$id_decla\" target=\"_blank\"><span class=\"label label-primary\"><i class=\"fa fa-download\"></i> &nbsp; PDF</span></a>";    
  }
-}
+  }}
  
  echo"</td>";    
 
 
-echo"<td style=\"width:20%; text-align: center\">";
+echo"<td style=\"width:15%; text-align: center\">";
 
+  if($type_decla !=3 AND $type_decla !=4 AND $type_decla !=5 )    {  
 if($etat_dde ==0 OR $etat_dde==1 ){
-echo"| <a href=\"../../public/upload/$dossier/$justificatif1\" target=\"_blank\"> Justif. 1</a> | <a href=\"../../public/upload/$dossier/$justificatif2\" target=\"_blank\"> Justif. 2</a> | ";}    
+  echo"| <a href=\"../../public/upload/$dossier/$justificatif1\" target=\"_blank\"> Justif. 1</a> | <a href=\"../../public/upload/$dossier/$justificatif2\" target=\"_blank\"> Justif. 2</a> | ";} }   
 
 
 echo"</td>
@@ -299,8 +312,8 @@ echo"<a href=\"#\" onclick=\"modifDate($id_decla);\">Reduire la date</a> ";}
 <!-- AdminLTE App -->
 <script src="../../../dist/js/app.min.js"></script>  
 <!-- Datatable -->
-<script src="../../../plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="../../../plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script src="../../../plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+<script src="../../../plugins/datatables/media/js/dataTables.bootstrap.min.js"></script>
 
 <script src="../../../plugins/sweetalert2/sweetalert2.min.js"></script>
 
@@ -308,6 +321,33 @@ echo"<a href=\"#\" onclick=\"modifDate($id_decla);\">Reduire la date</a> ";}
  
  
  <script>
+     
+      $(function () {
+
+        $('#liste_demandes').DataTable({
+       "stateSave": true,
+         "stateDuration": 60 * 3,
+          "ordering": false,
+           "language": {
+            "lengthMenu": "_MENU_  enregistrements par page",
+            "zeroRecords": "Désolé, aucun résultat trouvé.",
+            "info": "Affichage page _PAGE_ sur _PAGES_",
+            "infoEmpty": "Aucun enregistrement disponible",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+             "search": "Recherche",
+             "paginate": {
+       			 "first":      "First",
+       			 "last":       "Last",
+        		 "next":       "Suivant",
+        		 "previous":   "Précédent"
+  				  },
+         
+        }
+       
+       
+      });
+      
+      });
      
      
  function modifDate(id_decla) {
@@ -380,6 +420,7 @@ etat = document.getElementById("select_"+$id).value;
 if(etat==1){document.location.href="demande_encours.php?id_decla="+$id;}
 if(etat==2){document.location.href="demande_ok.php?id_decla="+$id;}
 if(etat==3){refuseDemande($id);}
+if(etat==5){document.location.href="demande_perime.php?id_decla="+$id;}
 
 
 }

@@ -1,14 +1,7 @@
  <?php
 
 /***** Dernière modification : 24/08/2016, Romain TALDU	*****/
- 
-require(__DIR__ .'/model.inc.php');
-
-// préparation connexion
-$connect = new connection();
-$includes = new includes($connect);
-
-
+ if (!isset($ss_menu)){$ss_menu="";}
  ?>    
   <!-- Left side column. contains the logo and sidebar -->
       <aside class="main-sidebar">
@@ -37,9 +30,24 @@ $includes = new includes($connect);
              <a href="../dashboard/index.php"><i class="fa fa-dashboard active"></i> <span>Tableau de bord</span></a>
             </li>
             
-              <li <?php if($menu==4){echo "class=\"active\"";}?>>
-            <a href="../ajout_noemail/index.php"><i class="fa fa-user"></i> <span>Ajout usager sans email   </span></a>
-            </li>
+                         
+             <li class="treeview <?php if($menu==4){echo "active";}?>">
+          <a href="#">
+            <i class="fa fa fa-user"></i> <span>Ajout usager</span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul style="display: <?php if($menu==4){echo "yes";}else{echo "no";} ?>;" class="treeview-menu menu-open">
+          	<li <?php if($ss_menu==41){echo "class=\"active\"";}?>><a href="../ajout_noemail/index.php"><i class="fa fa-circle-o"></i> Usager sans email</a></li>
+          	<li <?php if($ss_menu==42){echo "class=\"active\"";}?>><a href="../ajout_specifique/index.php"><i class="fa fa-circle-o"></i> Usager spécifique</a></li>
+           
+           
+          </ul>
+        </li>
+            
+            
+            
+            
+            
             
                <li <?php if($menu==2){echo "class=\"active\"";}?>>
             <a href="../export/index.php"><i class="fa fa-external-link-square"></i> <span>Export AFS2R</span></a>
@@ -50,8 +58,7 @@ $includes = new includes($connect);
              
               <li <?php if($menu==3){echo "class=\"active\"";}?>>
             <a href="../administrateurs/index.php"><i class="fa fa-users"></i> <span>Gestion des admin</span>
-            	<?php echo $includes->adminAttente(); ?>
-            	</a>
+            </a>
             </li>
             
             <?php } ?>

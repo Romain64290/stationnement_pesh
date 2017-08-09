@@ -4,6 +4,7 @@
 
 require(__DIR__ .'/../../../include/verif_session.php');
 $menu=4;
+$ss_menu=41;
 require(__DIR__ .'/../../../include/config.inc.php');
 require(__DIR__ .'/../../../include/connexion.inc.php');
 require(__DIR__ .'/model.inc.php');

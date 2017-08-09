@@ -79,12 +79,12 @@ function verifImmatriculation($immatriculation, &$propre = null)
     $p = '#^([0-9]+|[a-z]+)(?:\s|-)?([a-z]+|[0-9]+)(?:\s|-)?([a-z]+|[0-9]+)$#i';
     if (preg_match('#^(?(?!ss|ww)[a-hj-np-tv-z]{2})(?:\s|-)?[0-9]{3}(?:\s|-)?(?(?!ss)[a-hj-np-tv-z]{2})$#i', $immatriculation))
     {
-        $propre = strtoupper(preg_replace($p, '$1-$2-$3', $immatriculation));
+        $propre = strtoupper(preg_replace($p, '$1$2$3', $immatriculation));
         return true;
     }
     elseif (preg_match('#^[0-9]{1,4}(?:\s|-)?[a-hj-np-tv-z]{2,3}(?:\s|-)?(?:97[1-6]|0[1-9]|[1-8][0-9]|9[1-5]|2[ab])$#i', $immatriculation))
     {
-        $propre = strtoupper(preg_replace($p, '$1-$2-$3', $immatriculation));  
+        $propre = strtoupper(preg_replace($p, '$1$2$3', $immatriculation));  
         return $propre;
     }
     else

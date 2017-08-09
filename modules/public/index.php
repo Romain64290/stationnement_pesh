@@ -198,14 +198,14 @@ input[readonly] {
 
 
 
-<label for="type_decla" class="col-sm-3 control-label">Documents à transmettre</label>
+<label for="type_decla" class="col-sm-3 control-label">Profil</label>
 		<div class="col-sm-7">
                      <div class="form-group">
 			<label class="radio" style="margin-bottom:15px;margin-left:20px;">
 				<input type="radio"  name="type_decla" value="pmr" required> Bénéficiaire carte européenne de stationnement
 			</label>
 			<label class="radio" style="margin-bottom:15px;margin-left:20px;">
-				<input type="radio"  name="type_decla" value="pro" required> Professionnels de santé
+				<input type="radio"  name="type_decla" value="pro" required> Professionnel de santé
 			</label>
 		    <div class="pmr box"><h4><span class="label label-info">Documents à transmettre:</span></h4><ul>
 				<li >Document 1 : Carte grise</li>

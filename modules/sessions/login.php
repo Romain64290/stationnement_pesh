@@ -47,7 +47,7 @@ if($ldapconn) {
             $_SESSION['photo_membre']= "<img src=\"data:image/jpeg;base64, $photo\"";
             
                }else{
-            $_SESSION['photo_membre']= "<img src=\"../../../dist/img/avatar7.png\" class=\"user-image\" alt=\"User Image\">";
+            $_SESSION['photo_membre']= "<img src=\"../../../dist/img/avatar7.png\"";
             }
  
        
