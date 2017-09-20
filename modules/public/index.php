@@ -42,10 +42,12 @@ if(!isset($_SESSION['civilite'])){$_SESSION['civilite']=1;}
   
 <style>
 header{
-background: #188abc;
+//background: #188abc;
+background: #D7004D;
 }
 section.success{
-background: #188abc;
+//background: #188abc;
+background: #D7004D;
 }
 
 .profile-header div {
@@ -344,6 +346,7 @@ input[readonly] {
     <script src="js/freelancer.min.js"></script>
     
     <script src="../../../plugins/sweetalert2/sweetalert2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/es6-promise/latest/es6-promise.auto.min.js"></script> <!-- IE support -->
     
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
  	<script src="../../include/js/validator.js"></script>
@@ -410,8 +413,8 @@ function Valide_ok() {
   	  
   swal({
   title: 'Demande d\'inscription enregistrée !',
-  text: "Vous serez informé(e) email du traitement de votre demande.",
-  type: 'success',
+  text: "Les services de la mairie prendront en compte votre demande dans les meilleurs délais. Vous serez informé(e) par email du traitement de votre demande.",
+  type: 'info',
 
 })
     

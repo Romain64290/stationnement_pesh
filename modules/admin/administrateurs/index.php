@@ -117,7 +117,7 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
 		 $id_typemembre=4;
 		 $nom_membre=htmlspecialchars($key["sn"][0]);
 		 $prenom_membre=htmlspecialchars($key["givenname"][0]);
-		 $email=htmlspecialchars($key["mail"][0]);
+                 if (isset($key["mail"][0])){$email=htmlspecialchars($key["mail"][0]);}else{$email="";}
 		 
 echo "
 <tr>

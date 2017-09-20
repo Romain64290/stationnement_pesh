@@ -52,6 +52,7 @@ $etatExport=$dashboard->etatExport();
   position:static
 }
 
+
   </style>
      
   </head>
@@ -143,7 +144,17 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
             
               <div class="box-body">
                                         
-    
+<p>
+Show: 
+<select id="table-filter">
+<option value="">All</option>
+<option>Nouvelle</option>
+<option>San Francisco</option>
+<option>Engineer</option>
+<option>Developer</option>
+</select>
+</p>
+
   <table id="liste_demandes" class="table table-bordered table-striped">
                     <thead>
                       <tr>
@@ -328,7 +339,8 @@ echo"<a href=\"#\" onclick=\"modifDate($id_decla);\">Reduire la date</a> ";}
        "stateSave": true,
          "stateDuration": 60 * 3,
           "ordering": false,
-           "language": {
+       
+            "language": {
             "lengthMenu": "_MENU_  enregistrements par page",
             "zeroRecords": "Désolé, aucun résultat trouvé.",
             "info": "Affichage page _PAGE_ sur _PAGES_",
@@ -347,6 +359,7 @@ echo"<a href=\"#\" onclick=\"modifDate($id_decla);\">Reduire la date</a> ";}
        
       });
       
+     
       });
      
      
