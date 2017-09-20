@@ -46,12 +46,17 @@ $etatExport=$dashboard->etatExport();
       <!-- Jquerry ui pour date picker-->
   <link rel="stylesheet" href="../../../plugins/jquery-ui-1.11.4/themes/smoothness/jquery-ui.css">
   <script src="../../../plugins/jQuery/jQuery-2.1.4.min.js"></script>    
+  
+   <script src="../../../plugins/Chart.js-master/dist/Chart.js"></script>
 
   <style>
  #datepicker {
   position:static
 }
 
+.info-box {
+    background: #f4f4f4;
+}
 
   </style>
      
@@ -88,23 +93,45 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
 
   	<!-- Main content -->
         <section class="content">
-        
-        <!-- Info boxes -->
+            
+            
+            
+            
+            
+            <div class="row">
+            <div class="col-md-12">
+              <div class="box box-primary collapsed-box">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Statistiques</h3>
+                  <div class="box-tools pull-right">
+                   <!-- <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button> -->
+                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+                 
+                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                	
+                <!-- Info boxes -->
       <div class="row">
                   <div class="col-md-4 col-sm-12 col-xs-12">
+            <div class="row"> 
+                 <div class="col-md-12">
           <div class="info-box">
             <span class="info-box-icon bg-green"><i class="fa fa-car"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Nombre demandes</span>
+              <span class="info-box-text">Total demandes en 2017</span>
               <span class="info-box-number"><?php $dashboard->afficheNbreDemandes();?></span>
             </div>
             <!-- /.info-box-content -->
           </div>
           <!-- /.info-box -->    
-        </div>
-        <div class="col-md-4 col-sm-6 col-xs-12">
-          <div class="info-box">
+        </div></div>  
+                  
+               <div class="row"> 
+                    <div class="col-md-12">
+              <div class="info-box">
             <span class="info-box-icon bg-aqua"><i class="fa fa-wheelchair"></i></span>
 
             <div class="info-box-content">
@@ -112,12 +139,12 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
               <span class="info-box-number"><?php $dashboard->afficheNbrePmr();?></span>
             </div>
             <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
-          <div class="info-box">
+          </div>        
+               </div> </div>         
+                      
+                    <div class="row">  
+                         <div class="col-md-12">
+                     <div class="info-box">
             <span class="info-box-icon bg-red"><i class="fa fa-medkit"></i></span>
 
             <div class="info-box-content">
@@ -127,8 +154,88 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
             <!-- /.info-box-content -->
           </div>
           <!-- /.info-box -->    
+        </div>    </div>  
+                         <div class="row">  
+                         <div class="col-md-12">
+                     <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="fa fa-star"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Usagers spécifiques</span>
+              <span class="info-box-number"><?php $dashboard->afficheNbreSpe();?></span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->    
+        </div>    </div> 
+                      
+                      
+                      
+                  </div>
+          
+          
+          
+          
+          
+          
+        <div class="col-md-8 col-sm-8 col-xs-12">
+      
+            
+             <div class="row">  
+             <div class="col-md-8">
+                    	<p class="text-center">
+                        <strong>Etat des demandes</strong>
+                      </p>
+                      <div class="chart-responsive">
+                      	
+                        <canvas id="pieChart" height="170"></canvas>
+                        
+                      </div><!-- ./chart-responsive -->
+                    </div><!-- /.col -->
+                    <div class="col-md-4"><br><br>
+                      <ul class="chart-legend clearfix middle">
+                        <li><i class="fa fa-circle-o text-aqua"> </i> Nouvelle demande</li>
+                        <li><i class="fa fa-circle-o text-yellow"></i> Demande en cours de traitement</li>
+                        <li><i class="fa fa-circle-o text-green"></i> Demande validée</li>
+                        <li><i class="fa fa-circle-o text-red"></i> Demande rejetée</li>
+                        <li><i class="fa fa-circle-o text-gray"></i> Demande exportée</li>
+                        <li><i class="fa fa-circle-o text-black"></i> Demande périmée</li>
+                       
+                      
+                      </ul>
+                    </div><!-- /.col -->
+             </div>
+            
+            
+            
+          <!-- /.info-box -->
         </div>
+        <!-- /.col -->
+       
+       
       </div>
+                
+                
+                </div>    </div>  </div>    </div> 
+    
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+        
+    
             
           
 <div class="box box-primary">
@@ -144,7 +251,7 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
             
               <div class="box-body">
                                         
-<p>
+<!--<p>
 Show: 
 <select id="table-filter">
 <option value="">All</option>
@@ -153,7 +260,7 @@ Show:
 <option>Engineer</option>
 <option>Developer</option>
 </select>
-</p>
+</p> -->
 
   <table id="liste_demandes" class="table table-bordered table-striped">
                     <thead>
@@ -316,8 +423,7 @@ echo"<a href=\"#\" onclick=\"modifDate($id_decla);\">Reduire la date</a> ";}
 
 <!-- Bootstrap 3.3.6 -->
 <script src="../../../bootstrap/js/bootstrap.min.js"></script>
-<!-- ChartJS 1.0.1 -->
-<script src="../../../plugins/chartjs/Chart.js"></script>
+
 <!-- FastClick -->
 <script src="../../../plugins/fastclick/fastclick.js"></script>
 <!-- AdminLTE App -->
@@ -438,6 +544,40 @@ if(etat==5){document.location.href="demande_perime.php?id_decla="+$id;}
 
 }
    
+   
+   
+var ctx = document.getElementById("pieChart");
+var myChart = new Chart(ctx, {
+  type: 'doughnut',
+    data : {
+     labels: [
+               
+"Nouvelle demande",
+"Demande en cours de traitement",
+"Demande validée",
+"Demande rejetée",
+"Demande exportée",
+"Demande périmée"
+            ],
+    datasets: [
+        {
+            data: [<?php $dashboard->afficheRepartitionDemandes(); ?>],
+            backgroundColor: [
+                 "#00c0ef",
+                "#f39c12",
+                "#00a65a",
+                "#FF6384",
+                "#d2d6de",
+                "#000"
+            ]
+           
+           
+        }]
+},
+    options: {
+    animationSteps: 1000	
+     }
+});   
  
     </script>
  

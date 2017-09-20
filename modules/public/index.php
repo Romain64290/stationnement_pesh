@@ -10,7 +10,9 @@ $valide = isset($_GET['valide']) ? $_GET['valide'] : NULL;
 // les session permettent de garder en memoire la saisie en cas de demande rejet pour mauvaise plaque d'immatriculation
 session_start();
 if(!isset($_SESSION['civilite'])){$_SESSION['civilite']=1;}
+if(!isset($_SESSION['type_decla'])){$_SESSION['type_decla']="";}
 
+if(isset($_SESSION['immatriculation'])){$immatriculation=$_SESSION['immatriculation'];}else{$immatriculation="";}
 
 ?>
 <!DOCTYPE html>
@@ -42,12 +44,12 @@ if(!isset($_SESSION['civilite'])){$_SESSION['civilite']=1;}
   
 <style>
 header{
-//background: #188abc;
-background: #D7004D;
+background: #188abc;
+//background: #D7004D;
 }
 section.success{
-//background: #188abc;
-background: #D7004D;
+background: #188abc;
+//background: #D7004D;
 }
 
 .profile-header div {
@@ -84,7 +86,7 @@ input[readonly] {
 
 </head>
 
-<body id="page-top" class="index"  <?php if($valide=="ok"){echo"onload=\"Valide_ok();\"";} ?><?php if($valide=="no"){echo"onload=\"Valide_no();\"";} ?><?php if($valide=="upload"){echo"onload=\"Valide_upload();\"";} ?>>
+<body id="page-top" class="index"  <?php if($valide=="ok"){echo"onload=\"Valide_ok();\"";}  if($valide=="no"){echo"onload=\"Valide_no();\"";}  if($valide=="upload"){echo"onload=\"Valide_upload();\"";} ?>>
 <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
 
     <!-- Navigation -->
@@ -148,7 +150,7 @@ input[readonly] {
                 </div>
             </div>
             
-<form name="formulaire" role="form" class="form-horizontal" data-toggle="validator" action="upload.php" method="post" enctype="multipart/form-data">
+<form name="formulaire" role="form" class="form-horizontal" id="form" data-toggle="validator" action="upload.php" method="post" enctype="multipart/form-data">
 
     
 	<div class="row">
@@ -190,7 +192,8 @@ input[readonly] {
 				<div class="form-group">
 				<label for="immatriculation" class="col-sm-3 control-label">Immatriculation</label>
 					<div class="col-sm-7">
-						  <input type="text" class="form-control" id="immatriculation" name="immatriculation" placeholder="Plaque d'immatriculation de votre vehicule" value="<?php if(isset($_SESSION['immatriculation']))  {echo $_SESSION['immatriculation'];} ?>" required>
+						  <input type="text" class="form-control" id="immatriculation" name="immatriculation" 
+                          <?php if($valide=="no"){echo"placeholder=\"Plaque saisie : $immatriculation\"";}else{echo"placeholder=\"Plaque d'immatriculation de votre vehicule\"";}?> value="" required>
 						  <span class="glyphicon form-control-feedback" style="margin-right:20px" aria-hidden="true"></span>
                                                   <div class="help-block with-errors"></div>
 					</div>
@@ -204,10 +207,10 @@ input[readonly] {
 		<div class="col-sm-7">
                      <div class="form-group">
 			<label class="radio" style="margin-bottom:15px;margin-left:20px;">
-				<input type="radio"  name="type_decla" value="pmr" required> Bénéficiaire carte européenne de stationnement
+				<input type="radio"  name="type_decla" value="pmr" <?php if($_SESSION['type_decla']==1)  {echo "checked";} ?> required> Bénéficiaire carte européenne de stationnement
 			</label>
 			<label class="radio" style="margin-bottom:15px;margin-left:20px;">
-				<input type="radio"  name="type_decla" value="pro" required> Professionnel de santé
+				<input type="radio"  name="type_decla" value="pro" <?php if($_SESSION['type_decla']==2)  {echo "checked";} ?> required> Professionnel de santé
 			</label>
 		    <div class="pmr box"><h4><span class="label label-info">Documents à transmettre:</span></h4><ul>
 				<li >Document 1 : Carte grise</li>
@@ -251,7 +254,7 @@ input[readonly] {
 <div class="row" style="width:75%;margin:auto;text-align:center">
    <!--  <div style="color:red"align="center"> Taille maximale :  5 Mo par fichier </div><br><br> -->
       <div class="button">
-        <button class="btn btn-primary btn-lg" type="submit" style="margin-bottom:36px" >Envoyer</button>
+        <button class="btn btn-primary btn-lg" type="submit" style="margin-bottom:36px" id="soumettre" >Envoyer</button>
     </div>
 </div>
 
@@ -441,8 +444,12 @@ function Valide_no() {
   type: 'error',
 
 })
-    
+
+$("#soumettre").click();
+
  } 
+ 
+
 </SCRIPT>
     
 
