@@ -86,19 +86,18 @@ return $destination;
  * Envoi email societe de confirmation upload
 ********************************************************/ 
 
-function envoiEmailConfirmation($email_societe,$upload1,$upload2,$upload3,$upload4,$upload5)
+function envoiEmailConfirmation($mail_user)
 
 {
 	
 // Envoi des emails
 
+    
 // Création d'un nouvel objet $mail
 $mail = new PHPMailer();
 // Encodage
 $mail->CharSet = 'UTF-8';
-
-// creation de la liste des factures envoyées 
-$liste_factures_societe=$upload1."  ".$upload2."  ".$upload3."  ".$upload4."  ".$upload5;
+$mail->Encoding = 'base64'; 
 
 
 //=====Corps du message
@@ -106,33 +105,31 @@ $body = "<html><head></head>
 <body>
 Bonjour,<br>
 <br>
-Nous vous remercions du dépôt de votre (vos) facture(s) sur notre site.  Elles seront prises en compte dans les meilleurs délais.<br>
-Les factures déposées sont : ".$liste_factures_societe."<br>
+Votre déclaration d'immatriculation dans le système de contrôle automatisé a bien été enregistrée.<br>
+Nous étudierons votre demande dans les plus brefs délais et vous informerons de la suite qui lui sera réservée.<br>
 <br>
-Salutations<br>
+Cordialement,<br>
 <br>
+La direction Prévention et Sécurité Publique<br>
+Ville de Pau<br>
 </body>
 </html>";
 //==========
 
 
 // Expediteur, adresse de retour et destinataire :
-$mail->SetFrom("NO-REPLY@agglo-pau.fr", "Agglomération Pau-Pyrénées"); //L'expediteur du mail
+$mail->SetFrom(FROM_EMAIL, "Ville de Pau"); //L'expediteur du mail
 $mail->AddReplyTo("NO-REPLY@agglo-pau.fr", "NO REPLY"); //Pour que l'usager réponde au mail
-
-// Si on a le nom $mail->AddAddress("romain_taldu@hotmail.com", "Romain perso"); 
+// Si on a le nom : $mail->AddAddress("romain_taldu@hotmail.com", "Romain perso"); 
  //mail du destinataire
-$mail->AddAddress($email_societe); 
+$mail->AddAddress($mail_user); 
 
 
 // Sujet du mail
-$mail->Subject = "Agglomération Pau-Pyrénées - Accusé de dépôt de facture";
+$mail->Subject = "Ville de Pau - Contrôle stationnement automatisé : demande enregistrée";
 // Le message
 $mail->MsgHTML($body);
 
-//Attach a file
-//$mail->addAttachment('colas-pau_158_2.pdf');
-//$mail->addAttachment('elcom-reso_147_1.pdf');
 
 // Envoi de l'email
 $mail->Send();

@@ -39,51 +39,22 @@ $quantite=$result['nbr'];
 }  
 
   /***********************************************************************
- * Affiche nombre de Pmr
+ * Affiche nombre d'usager d'une rubrique particuliere
  **************************************************************************/
   
- function afficheNbrePmr()
+ function afficheNbre($type)
   {
       
 	try{
 $select = $this->con->prepare('SELECT COUNT(*) as nbr 
 FROM decla_immat
-WHERE type_decla = 1');
+WHERE type_decla = :type');
 
+$select->bindParam(':type', $type, PDO::PARAM_INT);
 $select->execute();
 	}
 	 catch (PDOException $e){
        echo $e->getMessage() . " <br><b>Erreur lors du calcul du nombre de demandes PMR</b>\n";
-	throw $e;
-        exit;
-    }
-
-$result = $select->fetch();
-
-$quantite=$result['nbr'];
-		
-	      echo $quantite;
-      
-   
-}  
-
-
-  /***********************************************************************
- * Affiche nombre de Pro
- **************************************************************************/
-  
- function afficheNbrePro()
-  {
-      
-	try{
-$select = $this->con->prepare('SELECT COUNT(*) as nbr 
-FROM decla_immat
-WHERE type_decla = 2');
-
-$select->execute();
-	}
-	 catch (PDOException $e){
-       echo $e->getMessage() . " <br><b>Erreur lors du calcul du nombre de demandes PRO </b>\n";
 	throw $e;
         exit;
     }
@@ -252,7 +223,7 @@ $update->execute();
         
          
   {
- 
+     
      
 	try{	
 $update = $this->con->prepare('UPDATE decla_immat SET etat_dde =:etat  WHERE id_decla = :id_decla'); 
@@ -264,6 +235,31 @@ $update->execute();
 	
 	 catch (Exception $e) {
             echo $e->getMessage() . " <br><b>Erreur lors de la modification de l'etat de demande </b>\n";
+            throw $e;
+        }		
+
+  }
+  
+    /***********************************************************************
+ * Changement date péremption
+ **************************************************************************/
+  
+ function modifDatePeremption($id_decla,$today)
+        
+         
+  {
+     
+     
+	try{	
+$update = $this->con->prepare('UPDATE decla_immat SET date_validite =:today  WHERE id_decla = :id_decla'); 
+	    	
+$update->bindParam(':id_decla', $id_decla, PDO::PARAM_INT);
+$update->bindParam(':today', $today, PDO::PARAM_INT);
+$update->execute();	
+	}
+	
+	 catch (Exception $e) {
+            echo $e->getMessage() . " <br><b>Erreur lors de la modification de la date de péremption </b>\n";
             throw $e;
         }		
 
@@ -356,7 +352,7 @@ switch ($etat)
     case 3 :
     ++$rejetee;
     break;
-    case  4  :
+     case  4  :
     ++$exportee;
     break;
     case  5 :
@@ -376,14 +372,121 @@ switch ($etat)
 
 $repartition="$nouvelle,$encours,$validee,$rejetee,$exportee,$perimee";
 		
- echo $repartition;
+ return $repartition;
       
    
 }  
  
+ 
+
+
+ /*******************************************************
+ * Envoi email de refus
+********************************************************/ 
+
+function mailRefuse($id_decla,$motif)
+{
+
+// Recupération de l'adresse email  
+
+  try{
+  		
+		$select = $this->con->prepare('SELECT email,immatriculation
+		FROM decla_immat
+                WHERE id_decla = :id_decla');
+                
+                $select->bindParam(':id_decla', $id_decla, PDO::PARAM_INT);
+                $select->execute();
+		
+		$data = $select->fetch();
+		
+		}
+		
+	catch (PDOException $e){
+       echo $e->getMessage() . " <br><b>Erreur lors de la recherche de l'email</b>\n";
+	throw $e;
+        exit;
+    }
+	 
+$mail_user=$data['email'];
+$immatriculation=$data['immatriculation'];
+ 
+
+    
+// Création d'un nouvel objet $mail
+$mail = new PHPMailer();
+// Encodage
+$mail->CharSet = 'UTF-8';
+$mail->Encoding = 'base64'; 
+
+
+//=====Corps du message
+$body = "<html><head></head>
+<body>
+Bonjour,<br>
+<br>
+Votre déclaration d'immatriculation dans le système de contrôle automatisé, relative au véhicule immatriculé ".$immatriculation.", a été refusée.<br>
+".htmlspecialchars($motif)."<br>
+<br>
+Cordialement,<br>
+<br>
+La direction Prévention et Sécurité Publique<br>
+Ville de Pau<br>
+</body>
+</html>";
+//==========
+
+
+// Expediteur, adresse de retour et destinataire :
+$mail->SetFrom(FROM_EMAIL, "Ville de Pau"); //L'expediteur du mail
+$mail->AddReplyTo("NO-REPLY@agglo-pau.fr", "NO REPLY"); //Pour que l'usager réponde au mail
+// Si on a le nom : $mail->AddAddress("romain_taldu@hotmail.com", "Romain perso"); 
+ //mail du destinataire
+$mail->AddAddress($mail_user); 
+
+
+// Sujet du mail
+$mail->Subject = "Ville de Pau - Contrôle stationnement automatisé : demande refusée";
+// Le message
+$mail->MsgHTML($body);
+
+
+// Envoi de l'email
+$mail->Send();
+
+unset($mail);
+
+ 
+
+}
   
+ 
+	
+/***********************************************************************
+ * Supprime les élements périmés
+ **************************************************************************/
   
-  
+ function supPerime()
+        
+  {
+     
+  $today=date('Y-m-d H:i:s');   
+     
+	try{	
+$update = $this->con->prepare("UPDATE decla_immat SET etat_dde = 5  WHERE date_validite < :today AND date_validite <>'0000-00-00 00:00:00'"); 
+
+$update->bindParam(':today', $today, PDO::PARAM_STR);
+$update->execute();	
+	}
+	
+	 catch (Exception $e) {
+            echo $e->getMessage() . " <br><b>Erreur lors de la suppression des éléments périmés</b>\n";
+            throw $e;
+        }		
+
+  }
+
+
     }
 
 

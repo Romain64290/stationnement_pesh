@@ -5,6 +5,7 @@
 require(__DIR__ .'/../../../include/verif_session.php');
 require(__DIR__ .'/../../../include/config.inc.php');
 require(__DIR__ .'/../../../include/connexion.inc.php');
+require(__DIR__ .'/../../../plugins/PHPMailer/class.phpmailer.php');
 require(__DIR__ .'/../../../plugins/PHPExcel-1.8//Classes/PHPExcel.php');
 require(__DIR__ .'/model.inc.php');
 
@@ -227,10 +228,10 @@ header ('Pragma: public'); // HTTP/1.0
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
 $objWriter->save('php://output');
 
-
+exit;
 
 }
-exit;
+
 
  /***********************************************************************
  * Export validé
@@ -238,7 +239,7 @@ exit;
 
 if($_GET['export']=='ok'){$export_en_cours=$export->exportEnCoursOk();}
 
-//envoi un email de confirmation aux inscrits
+
 
  /***********************************************************************
  * Export annulé 

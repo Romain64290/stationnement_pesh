@@ -15,6 +15,12 @@ $dashboard = new dashboard($connect);
 
 $etatExport=$dashboard->etatExport();
 
+$repartition= explode(",", $dashboard->afficheRepartitionDemandes());
+$datarepartition=$repartition[0].",".$repartition[1].",".$repartition[2].",".$repartition[3];
+
+// supprime les élements périmés
+$etatExport=$dashboard->supPerime();
+
 ?>
 
 
@@ -136,7 +142,7 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
 
             <div class="info-box-content">
               <span class="info-box-text">PMR</span>
-              <span class="info-box-number"><?php $dashboard->afficheNbrePmr();?></span>
+              <span class="info-box-number"><?php $dashboard->afficheNbre(1);?></span>
             </div>
             <!-- /.info-box-content -->
           </div>        
@@ -149,7 +155,7 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
 
             <div class="info-box-content">
               <span class="info-box-text">Pro. Santé</span>
-              <span class="info-box-number"><?php $dashboard->afficheNbrePro();?></span>
+              <span class="info-box-number"><?php $dashboard->afficheNbre(2);?></span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -163,6 +169,8 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
             <div class="info-box-content">
               <span class="info-box-text">Usagers spécifiques</span>
               <span class="info-box-number"><?php $dashboard->afficheNbreSpe();?></span>
+              <br>
+            (Services de police : <b><?php $dashboard->afficheNbre(3);?></b>, Pool agglo : <b><?php $dashboard->afficheNbre(4);?></b>, CCAS - Pro Santé : <b><?php $dashboard->afficheNbre(5);?></b>)
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -194,12 +202,15 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
                     </div><!-- /.col -->
                     <div class="col-md-4"><br><br>
                       <ul class="chart-legend clearfix middle">
-                        <li><i class="fa fa-circle-o text-aqua"> </i> Nouvelle demande</li>
-                        <li><i class="fa fa-circle-o text-yellow"></i> Demande en cours de traitement</li>
-                        <li><i class="fa fa-circle-o text-green"></i> Demande validée</li>
-                        <li><i class="fa fa-circle-o text-red"></i> Demande rejetée</li>
-                        <li><i class="fa fa-circle-o text-gray"></i> Demande exportée</li>
-                        <li><i class="fa fa-circle-o text-black"></i> Demande périmée</li>
+                        <li><i class="fa fa-circle-o text-aqua"> </i> Nouvelle demande (<?php echo $repartition[0]; ?>)</li>
+                        <li><i class="fa fa-circle-o text-yellow"></i> Demande en cours de traitement (<?php echo $repartition[1]; ?>)</li>
+                        <li><i class="fa fa-circle-o text-green"></i> Demande validée (<?php echo $repartition[2]; ?>)</li>
+                        <li><i class="fa fa-circle-o text-red"></i> Demande rejetée (<?php echo $repartition[3]; ?>)</li>
+                        </ul>
+                        <br>
+                        <ul class="chart-legend clearfix middle">
+                        <li><i class="fa fa-circle-o text-white"></i> Demande exportée (<?php echo $repartition[4]; ?>)</li>
+                        <li><i class="fa fa-circle-o  text-white"></i> Demande périmée (<?php echo $repartition[5]; ?>)</li>
                        
                       
                       </ul>
@@ -323,7 +334,7 @@ echo "
 
      <td style=\"width: 10%; text-align: center\">";
 
-if($etat_dde ==0 OR $etat_dde==1 OR $etat_dde==2 OR $etat_dde==3 OR $etat_dde==4){echo $immatriculation;} 
+if($etat_dde ==0 OR $etat_dde==1 OR $etat_dde==2 OR $etat_dde==3 OR $etat_dde==4 OR $etat_dde==5){echo $immatriculation;} 
         
         echo"</td>
            
@@ -515,7 +526,7 @@ function refuseDemande(id_decla) {
         
  swal({
   title: 'Etes vous sure de vouloir refuser cette demande?',
-  text:"Vous pouvez preciser le motif du refus ! <br><form name=\"formulaire\" id=\"formulaire\" method=\"post\" action=\"refuse_demande.php\"><textarea name=\"motif\" class=\"swal2-textarea\" style=\"display: block;\">Motif du refus : </textarea><input type=\"hidden\" name=\"id_decla\" value=\""+id_decla+"\"></form>",
+  text:"Vous pouvez preciser le motif du refus ! <br><form name=\"formulaire\" id=\"formulaire\" method=\"post\" action=\"refuse_demande.php\"><textarea name=\"motif\" class=\"swal2-textarea\" style=\"display: block;\">Motif : </textarea><input type=\"hidden\" name=\"id_decla\" value=\""+id_decla+"\"></form>",
         
   type: 'warning',
   showCancelButton: true,
@@ -555,20 +566,18 @@ var myChart = new Chart(ctx, {
 "Nouvelle demande",
 "Demande en cours de traitement",
 "Demande validée",
-"Demande rejetée",
-"Demande exportée",
-"Demande périmée"
+"Demande rejetée"
+
             ],
     datasets: [
         {
-            data: [<?php $dashboard->afficheRepartitionDemandes(); ?>],
+            data: [<?php echo $datarepartition; ?>],
             backgroundColor: [
                  "#00c0ef",
                 "#f39c12",
                 "#00a65a",
-                "#FF6384",
-                "#d2d6de",
-                "#000"
+                "#FF6384"
+             
             ]
            
            

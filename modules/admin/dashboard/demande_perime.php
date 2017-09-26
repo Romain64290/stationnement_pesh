@@ -15,6 +15,10 @@ $dashboard = new dashboard($connect);
 //modification de l'etat
 $dashboard->modifEtat($_GET['id_decla'],5);
 
+//modification de la date de péremption
+$today=date('Y-m-d H:i:s'); 
+$dashboard->modifDatePeremption($_GET['id_decla'],$today);
+
 //suppression de la plaque d'immatriculation
 //$dashboard->immatRefuse($_POST['id_decla'],$_POST['motif']);
 

@@ -38,7 +38,7 @@ if($ldapconn) {
        // else{ header ('location: ../../admin/index.php?erreur=1');exit;}
         
         //trie du tableau
-      usort($data, array($this, 'comparer'));
+     usort($data, array($this, 'comparer'));
 
         
         // fonction qui compare les valeurs post_name l'une à l'autre

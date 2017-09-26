@@ -5,6 +5,7 @@
 require(__DIR__ .'/../../../include/verif_session.php');
 require(__DIR__ .'/../../../include/config.inc.php');
 require(__DIR__ .'/../../../include/connexion.inc.php');
+require(__DIR__ .'/../../../plugins/PHPMailer/class.phpmailer.php');
 require(__DIR__ .'/model.inc.php');
 
 
@@ -39,10 +40,8 @@ rrmdir($dir);
  }
 
 
-
-
-//envoie email refus
-//$dashboard->mailRefuse($_POST['id_decla'],$_POST['motif']);
+//envoi email refus
+$dashboard->mailRefuse($_POST['id_decla'],$_POST['motif']);
 
 
 Header("Location:index.php");

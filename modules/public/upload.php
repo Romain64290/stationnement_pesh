@@ -47,10 +47,10 @@ else{
  // Insertion des elements dans 
 $publique->save_demande($_POST['civilite'],$type_decla,$_POST['nom'],$_POST['prenom'],$_POST['email'],$bonne_immat,$uniqid,$justificatif1,$justificatif2);
     
-    
-//envoiEmailConfirmation($_POST['email_societe'],$_FILES['upload1']['name'],$_FILES['upload2']['name'],$_FILES['upload3']['name'],$_FILES['upload4']['name'],$_FILES['upload5']['name']);		
+ // Envoi email confirmation enregistrement   
+$publique->envoiEmailConfirmation($_POST['email']);		
 		
-	Header("Location:index.php?valide=ok#inscrire");
+Header("Location:index.php?valide=ok#inscrire");
     
 }
 }

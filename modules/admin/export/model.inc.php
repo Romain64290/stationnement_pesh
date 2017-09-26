@@ -104,16 +104,85 @@ $update->execute();
   
  function exportEnCoursOk()
   {
-try{	
-$update = $this->con->prepare('UPDATE export_en_cours SET etat = 0  WHERE id = 1'); 
-	    	
-$update->execute();	
-	}
+   // envoie mail de confirmation
+   
+     try{
+  		
+    $select = $this->con->prepare('SELECT *
+    FROM decla_immat
+    WHERE etat_dde = 2');
+                
+    $select->execute();
+		
 	
-	 catch (Exception $e) {
-            echo $e->getMessage() . " <br><b>Erreur lors l'update exportEnCours (Abort)</b>\n";
-            throw $e;
+		}
+		
+	 catch (PDOException $e){
+       echo $e->getMessage() . " <br><b>Erreur lors de la selection des email validés</b>\n";
+	throw $e;
+        exit;
+    }
+    
+        $data = $select->fetchAll(PDO::FETCH_OBJ);	
+
+        foreach($data as $key){
+            
+            $mail_user= htmlspecialchars($key->email);
+            $date_validite=$key->date_validite;
+            $date_validite= explode(" ",$date_validite);
+            $date_validite= explode("-",$date_validite[0]);
+            
+            $immatriculation=$key->immatriculation;
+      
+    
+// Création d'un nouvel objet $mail
+$mail = new PHPMailer();
+// Encodage
+$mail->CharSet = 'UTF-8';
+$mail->Encoding = 'base64'; 
+
+
+//=====Corps du message
+$body = "<html><head></head>
+<body>
+Bonjour,<br>
+<br>
+Votre déclaration d'immatriculation dans le système de contrôle automatisé, relative au véhicule immatriculé ".$immatriculation.", a été validée.<br>
+Elle est valable jusqu'au : ".$date_validite[2]."-".$date_validite[1]."-".$date_validite[0]." <br>
+<br>
+Cordialement,<br>
+<br>
+La direction Prévention et Sécurité Publique<br>
+Ville de Pau<br>
+</body>
+</html>";
+//==========
+
+
+// Expediteur, adresse de retour et destinataire :
+$mail->SetFrom(FROM_EMAIL, "Ville de Pau"); //L'expediteur du mail
+$mail->AddReplyTo("NO-REPLY@agglo-pau.fr", "NO REPLY"); //Pour que l'usager réponde au mail
+// Si on a le nom : $mail->AddAddress("romain_taldu@hotmail.com", "Romain perso"); 
+ //mail du destinataire
+$mail->AddAddress($mail_user); 
+
+
+// Sujet du mail
+$mail->Subject = "Ville de Pau - Contrôle stationnement automatisé : demande validée";
+// Le message
+$mail->MsgHTML($body);
+
+
+// Envoi de l'email
+$mail->Send();
+
+unset($mail);      
+            
         }
+     
+     
+     
+     
         
    // update les statuts valide en exporte     
 try{	
@@ -128,7 +197,19 @@ $update2->execute();
         }		
    
         
-   // envoie mail de confirmation
+
+    // Remet la variable d'export à 0  
+        
+        try{	
+$update = $this->con->prepare('UPDATE export_en_cours SET etat = 0  WHERE id = 1'); 
+	    	
+$update->execute();	
+	}
+	
+	 catch (Exception $e) {
+            echo $e->getMessage() . " <br><b>Erreur lors l'update exportEnCours (Abort)</b>\n";
+            throw $e;
+        }
 
   }
   

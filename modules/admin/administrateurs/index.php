@@ -108,7 +108,7 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
  /* Affichage de la liste des administrateurs */
              
  $afficheAdmin=$administrateurs->afficheAdmin(); 
-  
+   
  $compteur = 1;
 
 	 foreach($afficheAdmin as $key){
@@ -118,7 +118,10 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
 		 $nom_membre=htmlspecialchars($key["sn"][0]);
 		 $prenom_membre=htmlspecialchars($key["givenname"][0]);
                  if (isset($key["mail"][0])){$email=htmlspecialchars($key["mail"][0]);}else{$email="";}
-		 
+                 
+// suppression de la 1ere ligne vide.                 
+if($nom_membre !=""){
+    
 echo "
 <tr>
             <td style=\"width:3%; text-align: left\">$compteur</td>
@@ -139,11 +142,11 @@ echo "</td></tr>";
 
 
 	$compteur++;		
-          
+ }         
         }
 
  /* Fin de l'affichage de la liste des administrateurs */
-                  
+   
 ?>
                   
                     </tbody>
