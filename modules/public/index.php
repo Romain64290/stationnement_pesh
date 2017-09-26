@@ -44,12 +44,12 @@ if(isset($_SESSION['immatriculation'])){$immatriculation=$_SESSION['immatriculat
   
 <style>
 header{
-background: #188abc;
-//background: #D7004D;
+//background: #188abc;
+background: #D7004D;
 }
 section.success{
-background: #188abc;
-//background: #D7004D;
+//background: #188abc;
+background: #D7004D;
 }
 
 .profile-header div {
