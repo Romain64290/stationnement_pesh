@@ -44,11 +44,9 @@ if(isset($_SESSION['immatriculation'])){$immatriculation=$_SESSION['immatriculat
   
 <style>
 header{
-//background: #188abc;
 background: #D7004D;
 }
 section.success{
-//background: #188abc;
 background: #D7004D;
 }
 
@@ -83,10 +81,11 @@ input[readonly] {
 }
 </style>
 
+<script src='https://www.google.com/recaptcha/api.js'></script>
 
 </head>
 
-<body id="page-top" class="index"  <?php if($valide=="ok"){echo"onload=\"Valide_ok();\"";}  if($valide=="no"){echo"onload=\"Valide_no();\"";}  if($valide=="upload"){echo"onload=\"Valide_upload();\"";} ?>>
+<body id="page-top" class="index"  <?php if($valide=="ok"){echo"onload=\"Valide_ok();\"";}  if($valide=="no"){echo"onload=\"Valide_no();\"";} if($valide=="captcha"){echo"onload=\"Valide_captcha();\"";} if($valide=="upload"){echo"onload=\"Valide_upload();\"";} ?>>
 <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
 
     <!-- Navigation -->
@@ -128,7 +127,7 @@ input[readonly] {
     <header>
         <div class="container" id="maincontent" tabindex="-1">
             <div class="row">
-                <div class="col-lg-12">
+              
                     <img class="img-responsive" src="../../include/img/logo_300.png" alt="">
                     <div class="intro-text">
                         <h2 class="name">Stationnement de la Ville de PAU</h2>
@@ -193,7 +192,7 @@ input[readonly] {
 				<label for="immatriculation" class="col-sm-3 control-label">Immatriculation</label>
 					<div class="col-sm-7">
 						  <input type="text" class="form-control" id="immatriculation" name="immatriculation" 
-                          <?php if($valide=="no"){echo"placeholder=\"Plaque saisie : $immatriculation\"";}else{echo"placeholder=\"Plaque d'immatriculation de votre vehicule\"";}?> value="" required>
+                          <?php if($valide=="no"){echo"placeholder=\"Plaque saisie : $immatriculation\"";}else{echo"placeholder=\"Plaque d'immatriculation de votre vehicule\"";}?> value="<?php if($valide=="captcha"){echo $immatriculation;}?>" required >
 						  <span class="glyphicon form-control-feedback" style="margin-right:20px" aria-hidden="true"></span>
                                                   <div class="help-block with-errors"></div>
 					</div>
@@ -244,15 +243,22 @@ input[readonly] {
       <strong>Attention !</strong>  Vous devez transmettre des documents ! 
        </div>
 			 </div>
-	</div>
+	
 
     
         
     
     
+
+<div class="row">
+      <div class="col-sm-12" align="center">
+<br><div class="g-recaptcha" data-sitekey="6LfA0BcTAAAAAFHz-Ie7zcsaOk2EohaTbnpRsciR" ></div><br> <!-- Captcha agglo--pau.fr -->
+</div></div>
+
 <br>
 <div class="row" style="width:75%;margin:auto;text-align:center">
    <!--  <div style="color:red"align="center"> Taille maximale :  5 Mo par fichier </div><br><br> -->
+   
       <div class="button">
         <button class="btn btn-primary btn-lg" type="submit" style="margin-bottom:36px" id="soumettre" >Envoyer</button>
     </div>
@@ -434,6 +440,17 @@ function Valide_ok() {
     
  }
  
+ 
+  function Valide_captcha() {
+  	  
+  swal({
+  title: 'Attention',
+  text: "Vous devez cliquer sur la Captcha \"Je ne suis pas un robot\" afin de valider l'envoi de votre formulaire.",
+  type: 'warning',
+
+})
+    
+ }
 
 
 function Valide_no() {

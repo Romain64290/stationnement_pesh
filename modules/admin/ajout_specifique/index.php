@@ -135,6 +135,7 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
                 <option value="3" <?php if($_SESSION['type_decla']==3)  {echo "checked";} ?>>Services de police / Gendarmerie</option>
                 <option value="4" <?php if($_SESSION['type_decla']==4)  {echo "checked";} ?>>Pool agglo</option>
                 <option value="5" <?php if($_SESSION['type_decla']==5)  {echo "checked";} ?>>CCAS - Pro Santé</option>
+                <option value="6" <?php if($_SESSION['type_decla']==6)  {echo "checked";} ?>>Temporaire</option>
                 
 
             </select>                      

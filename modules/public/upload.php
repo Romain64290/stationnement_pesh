@@ -4,6 +4,7 @@ require('../../include/config.inc.php');
 require('../../include/connexion.inc.php');
 require('model.inc.php');
 require('../../plugins/PHPMailer/class.phpmailer.php');
+
 // préparation connexion
 
 $connect = new connection();
@@ -20,6 +21,33 @@ $_SESSION['immatriculation'] = $_POST['immatriculation'];
 
 if($_POST['type_decla']=="pmr"){$type_decla=1;}else{$type_decla=2;}
 $_SESSION['type_decla']=$type_decla;
+
+
+
+$captcha;
+      	
+      	
+      	if(isset($_POST['g-recaptcha-response'])){
+          $captcha=$_POST['g-recaptcha-response'];
+        }
+                
+        if(!$captcha){
+          Header("Location:index.php?valide=captcha#inscrire"); exit;
+                  
+        }
+        
+        
+        $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6LfA0BcTAAAAAEdLj5AhxXvftUWl0vxRDb5d7o0O&response=".$captcha."&remoteip=".$_SERVER['REMOTE_ADDR']);
+       
+        if($response.success==false)
+        {
+          echo '<h2>Vous êtes un spammeur !</h2>';
+        }else
+        {
+
+
+
+
 
 $bonne_immat=verifImmatriculation($_POST['immatriculation']);
 
@@ -55,7 +83,7 @@ Header("Location:index.php?valide=ok#inscrire");
 }
 }
   
-   
+ }  
    
   
 function verifImmatriculation($immatriculation, &$propre = null)
@@ -75,4 +103,6 @@ function verifImmatriculation($immatriculation, &$propre = null)
     {
         return false;
     }
-}
+
+        }
+

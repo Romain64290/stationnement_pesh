@@ -104,6 +104,10 @@ $select_valide=$export->selectValide();
        $type_decla="CCAS - Pro Santé";
        $difference="";
        break;
+   case 6:
+       $type_decla="Temporaire";
+       $difference="";
+       break;
 }
                  
 

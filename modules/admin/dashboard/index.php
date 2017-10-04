@@ -316,7 +316,8 @@ if($type_decla ==1) {$type_decla_lg="PMR";}
 if($type_decla ==2) {$type_decla_lg="Pro de sante";}   
 if($type_decla ==3) {$type_decla_lg="Serv. Polices";}   
 if($type_decla ==4) {$type_decla_lg="Pool Agglo";}   
-if($type_decla ==5) {$type_decla_lg="CCAS Pro";}   
+if($type_decla ==5) {$type_decla_lg="CCAS Pro";} 
+if($type_decla ==6) {$type_decla_lg="Temporaire";}   
                  
 if($date_validite=="0000-00-00 00:00:00"){$date_validite="";}else{
    $date_validite= explode(" ", $date_validite);
@@ -375,7 +376,7 @@ echo " </select>";
      
   echo"<td style=\"width: 8%; text-align: center\">";                
                   
-  if($type_decla !=3 AND $type_decla !=4 AND $type_decla !=5 )    {    
+  if($type_decla !=3 AND $type_decla !=4 AND $type_decla !=5 AND $type_decla !=6)    {    
       
 if($etat_dde ==0 OR $etat_dde==1 ){
  if($type_decla==1){  
@@ -390,7 +391,7 @@ if($etat_dde ==0 OR $etat_dde==1 ){
 
 echo"<td style=\"width:15%; text-align: center\">";
 
-  if($type_decla !=3 AND $type_decla !=4 AND $type_decla !=5 )    {  
+  if($type_decla !=3 AND $type_decla !=4 AND $type_decla !=5 AND $type_decla !=6)    {  
 if($etat_dde ==0 OR $etat_dde==1 ){
   echo"| <a href=\"../../public/upload/$dossier/$justificatif1\" target=\"_blank\"> Justif. 1</a> | <a href=\"../../public/upload/$dossier/$justificatif2\" target=\"_blank\"> Justif. 2</a> | ";} }   
 
