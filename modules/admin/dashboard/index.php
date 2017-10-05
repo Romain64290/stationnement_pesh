@@ -445,6 +445,7 @@ echo"<a href=\"#\" onclick=\"modifDate($id_decla);\">Reduire la date</a> ";}
 <script src="../../../plugins/datatables/media/js/dataTables.bootstrap.min.js"></script>
 
 <script src="../../../plugins/sweetalert2/sweetalert2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/es6-promise/latest/es6-promise.auto.min.js"></script> <!-- IE support -->
 
  <script src="../../../plugins/jquery-ui-1.11.4/jquery-ui.min.js"></script>
  
