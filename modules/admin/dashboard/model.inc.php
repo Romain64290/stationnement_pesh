@@ -78,7 +78,7 @@ $quantite=$result['nbr'];
 	try{
 $select = $this->con->prepare('SELECT COUNT(*) as nbr 
 FROM decla_immat
-WHERE type_decla = 3 OR type_decla = 4 OR type_decla = 5');
+WHERE type_decla = 3 OR type_decla = 4 OR type_decla = 5 OR type_decla = 6');
 
 $select->execute();
 	}

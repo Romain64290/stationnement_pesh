@@ -19,7 +19,7 @@ $repartition= explode(",", $dashboard->afficheRepartitionDemandes());
 $datarepartition=$repartition[0].",".$repartition[1].",".$repartition[2].",".$repartition[3];
 
 // supprime les élements périmés
-$etatExport=$dashboard->supPerime();
+$supPerime=$dashboard->supPerime();
 
 ?>
 
@@ -169,8 +169,8 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
             <div class="info-box-content">
               <span class="info-box-text">Usagers spécifiques</span>
               <span class="info-box-number"><?php $dashboard->afficheNbreSpe();?></span>
-              <br>
-            (Services de police : <b><?php $dashboard->afficheNbre(3);?></b>, Pool agglo : <b><?php $dashboard->afficheNbre(4);?></b>, CCAS - Pro Santé : <b><?php $dashboard->afficheNbre(5);?></b>)
+                 Services de police : <b><?php $dashboard->afficheNbre(3);?></b>, Pool agglo : <b><?php $dashboard->afficheNbre(4);?>
+                  <br></b>CCAS - Pro Santé : <b><?php $dashboard->afficheNbre(5);?></b>, Temporaire : <b><?php $dashboard->afficheNbre(6);?></b>
             </div>
             <!-- /.info-box-content -->
           </div>

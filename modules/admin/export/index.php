@@ -98,7 +98,7 @@ require(__DIR__ .'/../../../include/main_slidebar.php');
                   
                  
 
-                  <button type="button" class="btn btn-primary" onclick="location.href='export.php?export=encours';"><i class="fa fa-download"></i> &nbsp; Télécharger le fichier *.csv</button>
+                  <button type="button" class="btn btn-primary" onclick="location.href='export.php?export=encours';"><i class="fa fa-download"></i> &nbsp; Télécharger le fichier *.xls</button>
      
         
 
